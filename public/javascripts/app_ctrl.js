@@ -48,11 +48,29 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
     }
 
  	var no_of_questions = 20;
-    var question_indices = [];
-    for(var i=0; i<no_of_questions; i++){
-    	question_indices.push(i);
+    // var question_indices = [];
+    // for(var i=0; i<no_of_questions; i++){
+    // 	question_indices.push(i);
+    // }
+    // random_number(question_indices);
+
+    function get_question_ids(){
+        if(recieved_data.level == 'rapid_fire') var no_of_questions = 20;
+        else var no_of_questions = 10;
+        $http({
+            url: '/quiz_list',
+            method: 'GET',
+            params: {total_questions: no_of_questions}
+        }).success(function(data) {
+            $scope.quiz_all = [];
+            for(var i=0;i<data.length;i++){
+                $scope.quiz_all[i] = data[i]['_id'];
+            }
+            console.log($scope.quiz_all)
+        });
     }
-    random_number(question_indices);
+    get_question_ids();
+    // console.log(quiz_all)
 
     function random_number(question_indices) {
     	for(var i=0;i<question_indices.length;i++){
@@ -97,8 +115,11 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
         }
         var timer = $timeout($scope.onTimeout, 1000);
     }
+    $scope.loading = true;
 
     $scope.get_next_question = function() {
+
+        $scope.loading = true;
 
     	// console.log($scope.user_answer);
     	if ($scope.user_answer.correct == true) {
@@ -122,10 +143,11 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
     	$http({
     		url: '/test_http', 
     		method: "GET",
-    		params: {question_id: question_indices[$scope.question]}
+    		params: {question_id: $scope.quiz_all[$scope.question]}
     	})
 	    .success(function (data) {
 	        console.log(data);
+            $scope.loading = false;
 
 	        temp_question[$scope.question] = 
 	            {"question": data['question'], 
@@ -154,7 +176,9 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
 	        console.log('Error:'+data);
 	    });
     }
-    $scope.get_next_question();
+    var temp = $timeout(function(){
+        $scope.get_next_question();        
+    }, 1000);
 
     $scope.get_hint = function() {
     	if($scope.hints_remaining > 0){

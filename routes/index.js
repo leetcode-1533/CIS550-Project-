@@ -10,6 +10,10 @@ router.get('/', function(req, res, next) {
 var mongoose = require('mongoose');
 require('../models/Quiz');
 
+var MongoClinet = require('mongodb').MongoClient;
+var ObjectId = require('mongodb').ObjectID;
+var url = 'mongodb://kirasev:Kirasev101@ds159237.mlab.com:59237/sqlympics';
+
 var Quiz = mongoose.model('Quiz');
 
 var mysql = require('mysql');
@@ -22,6 +26,20 @@ var connection = mysql.createConnection({
   database : 'olympic_quiz'
 });
 
+router.get('/quiz_list', function(req, res, next) {
+  MongoClinet.connect(url, function(err, db) {
+    if (err) throw err;
+
+    console.log(req.query['total_questions']);
+    var questions = db.collection('questions');
+    questions.aggregate([ { $sample: { size: parseInt(req.query['total_questions'])} }, {$project:{_id: 1}}]).toArray(function (err, docs) {
+          // console.log(docs);
+        res.json(docs);
+        db.close();
+    });
+  });
+});
+
 router.get('/test_http', function(req, res, next) {
   var EventEmitter = events.EventEmitter;
   var flowController = new EventEmitter();
@@ -31,19 +49,28 @@ router.get('/test_http', function(req, res, next) {
     connection.query(obj["questionquery"], function (err, row) {
       connection.query(obj['options'], function (err, options) {
         if (err) console.log(err);
-          console.log(obj['question']);
-          // res.send({results: [{"question":obj['question']},
-        //     {"answer":[row[0], options[0],options[1],options[2]]}]});//options
+        console.log(obj['question']);
         res.json({"question":obj['question'],
-          "answer":[row[0], options[0],options[1],options[2]]});//options
+          "answer":[row[0], options[0],options[1],options[2]]});
       });
     });
   });
 
-  Quiz.findOne({"q_id": req.query.question_id}, function(err, obj) {
-    var temp = obj['questionquery'];
-    console.log(obj['questionquery']);
-    flowController.emit('dowork', obj);
+  MongoClinet.connect(url, function(err, db) {
+    var questions = db.collection('questions');
+      console.log(req.query);
+    questions.findOne({_id: ObjectId(req.query.question_id)}, function(err, obj) {
+        if(err) {
+            console.log("Mongo Error");
+            console.log(err);
+        }
+        if (obj) {
+            flowController.emit('dowork', obj);
+        } else {
+            console.log("No Result");
+            // flowController.emit('dowork', obj);
+        }
+    })
   })
 
   flowController.on('finished', function () {
