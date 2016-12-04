@@ -15,9 +15,9 @@ var Quiz = mongoose.model('Quiz');
 var mysql = require('mysql');
 
 var connection = mysql.createConnection({
-  host     : '[endpoint]',
+  host     : 'olympicquiz.cziypygdpbbb.us-west-2.rds.amazonaws.com',
   user     : 'shahanimesh94',
-  password : '[password]',
+  password : 'shahanimesh94',
   port     : '3306',
   database : 'olympic_quiz'
 });

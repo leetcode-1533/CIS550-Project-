@@ -9,29 +9,95 @@
 		<title>Quiz!</title>
 	</head>
 	<body ng-app="quizApp">
+
+		<script type="text/ng-template" id="/home.html">
+			<nav class="navbar navbar-default">
+			  	<div class="container-fluid">
+			    	<div class="navbar-header">
+			      		<a class="navbar-brand" href="/#/home">Olympics Quiz</a>
+			    	</div>
+			    	<ul class="nav navbar-nav">
+			      		<li class="active"><a href="/#/home">Home</a></li>
+			      		<li><a ng-click="go_to_quiz('easy')" style="cursor: pointer">Easy</a></li>
+			      		<li><a ng-click="go_to_quiz('medium')" style="cursor: pointer">Medium</a></li>
+			      		<li><a ng-click="go_to_quiz('hard')" style="cursor: pointer">Hard</a></li>
+			      		<li><a ng-click="go_to_quiz('rapid_fire')" style="cursor: pointer">Rapid Fire</a></li>
+			      		<li><a href="/#/leaderboard">Leaderboard</a></li>
+			    	</ul>
+			  	</div>
+			</nav>
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1" style="background-color: #e5e5f9; margin-top: 10%; padding: 3%">
+						<h3 style="text-align: center">Welcome to the Olympics Quiz!</h3>
+						<h5 style="text-align: center">Are you an Olympic buff? You have come to the right place!</h5>
+						<div class="form-group">
+						  	<label for="usr">Username:</label>
+						  	<input type="text" class="form-control" id="usr" ng-model="username" ng-disabled="anonymous_flag">
+						</div>
+						<div class="checkbox">
+						  	<label><input type="checkbox" ng-model="anonymous_flag">Play as Anonymous (your scores won't be displayed on the leaderboard)</label>
+						</div>
+						<div style="background-color: blue">
+							<div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+								<button ng-disabled="username=='' && !anonymous_flag" class="btn btn-success" style="margin: 16px; margin-left: 0px; width: 100%" ng-click="go_to_quiz('easy')">Easy (5 hints)</button>
+							</div>
+							<div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+								<button ng-disabled="username=='' && !anonymous_flag" class="btn btn-warning" style="margin: 16px; margin-right: 0px; width: 100%; float: right" ng-click="go_to_quiz('medium')">Medium (3 hints)</button>
+							</div>
+							<div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+								<button ng-disabled="username=='' && !anonymous_flag" class="btn btn-danger" style="margin: 16px; margin-left: 0px; width: 100%" ng-click="go_to_quiz('hard')">Hard (1 hint)</button>
+							</div>
+							<div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+								<button ng-disabled="username=='' && !anonymous_flag" class="btn btn-info" style="margin: 16px; margin-right: 0px; width: 100%; float: right" ng-click="go_to_quiz('rapid_fire')">Rapid Fire (timer)</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</script>
+
 		<script type="text/ng-template" id="/quiz.html">
+			<nav class="navbar navbar-default">
+			  	<div class="container-fluid">
+			    	<div class="navbar-header">
+			      		<a class="navbar-brand" href="/#/home">Olympics Quiz</a>
+			    	</div>
+			    	<ul class="nav navbar-nav">
+			      		<li><a href="/#/home">Home</a></li>
+			      		<li><a href="/#/leaderboard">Leaderboard</a></li>
+			    	</ul>
+			  	</div>
+			</nav>
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1" style="background-color: #e5e5f9; margin-top: 10%;">
+						<h6 style="width: 100%; text-align: center">Playing as: {{username}} <span ng-if="username!='Anonymous'">(Your scores will be saved with this name on the leaderboard)</span><span ng-if="username=='Anonymous'">(Your score will not be saved for the leaderboard)</span></h6>
 				        <h3 style="text-align: center">Q-{{question+1}}. {{questions[question].question}}</h3>
-				        <h5 style="text-align: center">Hints remaining: {{hints_remaining}}</h5>
+				        <h5 style="text-align: center"><span ng-if="level_display!='Practice Mode' && level_display!='Rapid Fire'">Level: </span>{{level_display}}</h5>
+				        <h5 style="text-align: center">Hints remaining: {{hints_remaining}}/{{hints_given}}</h5>
+				        <h4 style="text-align: center" ng-if="level_display=='Rapid Fire'">{{counter/60 | numberFixedLen:2}}:{{counter%60 | numberFixedLen:2}}</h4>
+				        <!-- <h4>{{counter}}</h4> -->
 				        <div style="width: 100%; margin-top: 40px">
 				            <!-- <div class="btn-group"  style="width: 100%">
 				            	<label class="btn btn-default" ng-repeat="option in questions[question].options" ng-model="$parent.an" btn-radio="'{{$index}}'" uncheckable style="width: 44%; float: left; margin: 3%; padding: 3%">
 								    <b>{{$index | numberToAlphabet}}.</b> {{option.answerText}}
 								</label>
 				            </div> -->
-				            <div ng-repeat="option in questions[question].options" style="width: 100%">
+				            <div class="radio" ng-repeat="option in questions[question].options">
+							  <label><input type="radio" name="user_answer" ng-model="$parent.user_answer" ng-value="{{option}}" ng-disabled="option.disabled">({{$index | numberToAlphabet}}.) {{option.answerText}}</label>
+							</div>
+				            <!-- <div ng-repeat="option in questions[question].options" style="width: 100%">
 					        	<input type="radio" name="user_answer" ng-model="$parent.user_answer" ng-value="{{option}}" ng-disabled="option.disabled"/>({{$index | numberToAlphabet}}.) {{option.answerText}}
-					        </div>
-				        </div>{{user_answer}}
+					        </div> -->
+				        </div>
 				        <div style="float: left; width: 50%; margin-top: 5%">
 				            <button class="btn btn-warning" style="float: left; width: 50%; margin: 5%" ng-click="get_hint()" ng-disabled="questions[question]['hint_taken'] || hints_remaining == 0">Hint</button>
 				        </div>
-				        <div style="float: left; width: 50%; margin-top: 5%" ng-show="question<9">
+				        <div style="float: left; width: 50%; margin-top: 5%" ng-show="question<question_limit">
 				            <button class="btn btn-info" style="float: right; width: 50%; margin: 5%" ng-click="get_next_question()" ng-disabled="user_answer == ''">Next</button>
 				        </div>
-				        <div style="float: left; width: 50%; margin-top: 5%" ng-show="question==9">
+				        <div style="float: left; width: 50%; margin-top: 5%" ng-show="question==question_limit">
 				            <button class="btn btn-success" style="float: right; width: 50%; margin: 5%" ng-click="submit_results()" ng-disabled="user_answer == ''">Submit</button>
 				        </div>
 				    </div>
@@ -40,9 +106,20 @@
 		</script>
 
 		<script type="text/ng-template" id="/result.html">
+			<nav class="navbar navbar-default">
+			  	<div class="container-fluid">
+			    	<div class="navbar-header">
+			      		<a class="navbar-brand" href="/#/home">Olympics Quiz</a>
+			    	</div>
+			    	<ul class="nav navbar-nav">
+			      		<li><a href="/#/home">Home</a></li>
+			      		<li><a href="/#/leaderboard">Leaderboard</a></li>
+			    	</ul>
+			  	</div>
+			</nav>
 			<div class="container" style="margin-left: 15%; margin-right: 15%; margin-top: 5%; width: 70%">
 			  	<h3 style="text-align: center">You got {{correct_answers}}/{{questions.length}} corect!</h3>
-			  	<h3 style="text-align: center">Your score: {{score}}/100</h3>
+			  	<h3 style="text-align: center">Your score: {{score}}/{{questions.length*10}}</h3>
 			  	<h5 style="text-align: center">Hints used: {{hints_used}}</h5>
 			  	<table class="table table-striped">
 			    	<thead>
@@ -66,6 +143,37 @@
 			      		</tr>
 			    	</tbody>
 			  	</table>
+			  	<div class="row" style="margin-top: 5%">
+			  		<h3 style="text-align: center">Try again</h3>
+			  		<div class="form-group">
+					  	<label for="usr">Username:</label>
+					  	<input type="text" class="form-control" id="usr" ng-model="username" ng-disabled="anonymous_flag">
+					</div>
+					<div class="checkbox">
+					  	<label><input type="checkbox" ng-model="anonymous_flag">Play as Anonymous (your scores won't be displayed on the leaderboard)</label>
+					</div>
+					<div style="background-color: blue">
+						<div class="col-md-3 col-lg-3 col-sm-6 col-xs-6">
+							<button ng-disabled="username=='' && !anonymous_flag" class="btn btn-success" style="margin: 16px; margin-left: 0px; width: 100%" ng-click="go_to_quiz('easy')">Easy (5 hints)</button>
+						</div>
+						<div class="col-md-3 col-lg-3 col-sm-6 col-xs-6">
+							<button ng-disabled="username=='' && !anonymous_flag" class="btn btn-warning" style="margin: 16px; margin-right: 0px; width: 100%; float: right" ng-click="go_to_quiz('medium')">Medium (3 hints)</button>
+						</div>
+						<div class="col-md-3 col-lg-3 col-sm-6 col-xs-6">
+							<button ng-disabled="username=='' && !anonymous_flag" class="btn btn-danger" style="margin: 16px; margin-left: 0px; width: 100%" ng-click="go_to_quiz('hard')">Hard (1 hint)</button>
+						</div>
+						<div class="col-md-3 col-lg-3 col-sm-6 col-xs-6">
+							<button ng-disabled="username=='' && !anonymous_flag" class="btn btn-info" style="margin: 16px; margin-right: 0px; width: 100%; float: right" ng-click="go_to_quiz('rapid_fire')">Rapid Fire (timer)</button>
+						</div>
+					</div>
+			  		</div>
+
+			  		<div class="row" style="text-align: center; margin-top: 5%">
+				  		<form action="/#/leaderboard">
+						    <input type="submit" class="btn btn-default" value="Leaderboard" />
+						</form>
+				  	</div>
+			  </div>
 			</div>
 		</script>
 

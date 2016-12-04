@@ -1,27 +1,51 @@
 var app = angular.module("quizApp", ['ui.router']);
 
-app.controller('questionsCtrl',['$scope', '$http', 'myService', function($scope, $http, myService){
+app.controller('homeCtrl', ['$scope', '$http', 'myService', function($scope, $http, myService){
+    $scope.username = "";
 
-	// $http.get('/test_http')
- //    .success(function (data) {
- //        console.log(data);
- //        temp_question = [
- //            {"questionText": data['question'], "answers": [
- //                {"answerText":data['answer'][0]['answer'], "correct": true},
- //                {"answerText":data['answer'][1]['options'], "correct": false},
- //                {"answerText":data['answer'][2]['options'], "correct": false},
- //                {"answerText":data['answer'][3]['options'], "correct": false}
- //            ]}
- //        ];
- //        console.log(temp_question[0]['answers'].length)
- //        random_number(temp_question[0]['answers']);
-	//         console.log(temp_question);
-	//         $scope.questions = temp_question;
- //        // console.log($scope.questions);
- //    })
- //    .error(function (data) {
- //        console.log('Error:'+data);
- //    });
+    $scope.go_to_quiz = function(level) {
+        var sending_data = {
+            level: level,
+            username: ($scope.anonymous_flag==true || $scope.username=="")?"Anonymous":$scope.username
+        };
+        myService.set(sending_data);
+        window.location = '/#/quiz';
+    }
+}]);
+
+app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', function($scope, $http, $timeout, myService){
+
+    var recieved_data = myService.get();
+    
+    if(angular.isDefined(recieved_data.username)) {
+        $scope.username = recieved_data.username;
+    }
+    else {
+        $scope.username = "Anonymous";
+    }
+
+    if(angular.isDefined(recieved_data.level)){
+        if(recieved_data.level == 'easy'){
+            $scope.hints_given = 5;
+            $scope.level_display = "Easy";
+        }
+        else if(recieved_data.level == 'medium'){
+            $scope.hints_given = 3;
+            $scope.level_display = "Medium";
+        }
+        else if(recieved_data.level == 'hard'){
+            $scope.hints_given = 1;
+            $scope.level_display = "Hard";
+        }
+        else if(recieved_data.level == 'rapid_fire'){
+            $scope.hints_given = 5;
+            $scope.level_display = "Rapid Fire";
+        }
+    }
+    else {
+        $scope.hints_given = 5;
+        $scope.level_display = "Practice Mode";
+    }
 
  	var no_of_questions = 20;
     var question_indices = [];
@@ -46,25 +70,51 @@ app.controller('questionsCtrl',['$scope', '$http', 'myService', function($scope,
     $scope.user_answer = "";
     $scope.score = 0;
     $scope.correct_answers = 0;
-    $scope.hints_remaining = 5;
+    $scope.hints_remaining = $scope.hints_given;
 
     $scope.question = -1;
     $scope.questions = [];
     temp_question = [];
+
+    if(recieved_data.level=="rapid_fire"){
+        $scope.question_limit = 99999;
+    }
+    else {
+        $scope.question_limit = 9;
+    }
+
+    if(recieved_data.level == 'rapid_fire'){
+        $scope.counter = 60;
+        $scope.onTimeout = function(){
+            $scope.counter--;
+            if ($scope.counter > 0) {
+                mytimeout = $timeout($scope.onTimeout,1000);
+            }
+            else {
+                alert("Time is up!");
+                $scope.submit_results_rapid();
+            }
+        }
+        var timer = $timeout($scope.onTimeout, 1000);
+    }
+
     $scope.get_next_question = function() {
 
-    	console.log($scope.user_answer);
+    	// console.log($scope.user_answer);
     	if ($scope.user_answer.correct == true) {
 	    	$scope.questions[$scope.question]['user_answer'] = true;
-	    	$scope.correct_answers = $scope.correct_answers + 1;			
+	    	$scope.correct_answers = $scope.correct_answers + 1;
+            if(recieved_data.level == "rapid_fire"){
+                $scope.counter = $scope.counter + 5;
+            }			
     		if($scope.questions[$scope.question]['hint_taken'] == false) {
     			$scope.score = $scope.score + 10;
     		}
     		else $scope.score = $scope.score + 5;
     	}
-    	console.log($scope.score);
-    	console.log($scope.correct_answers);
-    	console.log($scope.questions[$scope.question]);
+    	// console.log($scope.score);
+    	// console.log($scope.correct_answers);
+    	// console.log($scope.questions[$scope.question]);
 
     	$scope.user_answer = "";
     	$scope.question = $scope.question + 1;
@@ -126,8 +176,8 @@ app.controller('questionsCtrl',['$scope', '$http', 'myService', function($scope,
 
 
     $scope.submit_results = function(){
-    	console.log("here");
-    	console.log($scope.user_answer);
+    	// console.log("here");
+    	// console.log($scope.user_answer);
     	if ($scope.user_answer.correct == true) {
 	    	$scope.questions[$scope.question]['user_answer'] = true;
 	    	$scope.correct_answers = $scope.correct_answers + 1;			
@@ -136,42 +186,37 @@ app.controller('questionsCtrl',['$scope', '$http', 'myService', function($scope,
     		}
     		else $scope.score = $scope.score + 5;
     	}
-    	console.log($scope.score);
-    	console.log($scope.correct_answers);
-    	console.log($scope.questions[$scope.question]);
+    	// console.log($scope.score);
+    	// console.log($scope.correct_answers);
+    	// console.log($scope.questions[$scope.question]);
 
     	var sending_data = {
     		"questions": $scope.questions,
     		"correct_answers": $scope.correct_answers,
     		"score": $scope.score,
-    		"hints_remaining": $scope.hints_remaining 
+    		"hints_remaining": $scope.hints_remaining,
+            "hints_given": $scope.hints_given,
+            "username": $scope.username,
+            "level": recieved_data.level 
     	}
     	myService.set(sending_data);
     	window.location = '/#/result';
     }
 
-    // $scope.answers ={};
-    // $scope.correctCount = 0;
+    $scope.submit_results_rapid = function(){
+        var sending_data = {
+            "questions": $scope.questions,
+            "correct_answers": $scope.correct_answers,
+            "score": $scope.score,
+            "hints_remaining": $scope.hints_remaining,
+            "hints_given": $scope.hints_given,
+            "username": $scope.username,
+            "level": recieved_data.level 
+        }
+        myService.set(sending_data);
+        window.location = '/#/result';
+    }
 
-    // $scope.showResult = function(){
-    //     $scope.correctCount = 0;
-    //     var qLength = $scope.questions.length;
-    //     for(var i=0;i<qLength;i++){
-    //         var answers = $scope.questions[i].answers;
-    //         $scope.questions[i].userAnswerCorrect = false;
-    //         $scope.questions[i].userAnswer = $scope.answers[i];
-    //         for(var j=0;j<answers.length;j++){
-    //             answers[j].selected = "donno";
-    //             if ($scope.questions[i].userAnswer === answers[j].answerText && answers[j].correct===true){
-    //                 $scope.questions[i].userAnswerCorrect = true;
-    //                 answers[j].selected = "true";
-    //                 $scope.correctCount++;
-    //             }else if($scope.questions[i].userAnswer === answers[j].answerText && answers[j].correct===false){
-    //                 answers[j].selected = "false";
-    //             }
-    //         }
-    //     }
-    // };
 }]);
 
 app.controller('resultCtrl',['$scope', '$http', 'myService', function($scope, $http, myService){
@@ -180,7 +225,19 @@ app.controller('resultCtrl',['$scope', '$http', 'myService', function($scope, $h
 	$scope.score = all_data.score;
 	$scope.correct_answers = all_data.correct_answers;
 	$scope.hints_remaining = all_data.hints_remaining;
-	$scope.hints_used = 5 - $scope.hints_remaining;
+    $scope.hints_given = all_data.hints_given;
+	$scope.hints_used = $scope.hints_given - $scope.hints_remaining;
+
+    $scope.username = "";
+
+    $scope.go_to_quiz = function(level) {
+        var sending_data = {
+            level: level,
+            username: $scope.anonymous_flag==true?"Anonymous":$scope.username
+        };
+        myService.set(sending_data);
+        window.location = '/#/quiz';
+    }
 }]);
 
 app.factory('myService', function(){
@@ -205,12 +262,33 @@ app.filter('numberToAlphabet', function(){
     }
 });
 
+app.filter('numberFixedLen', function () {
+    return function (n, len) {
+        var num = parseInt(n, 10);
+        len = parseInt(len, 10);
+        if (isNaN(num) || isNaN(len)) {
+            return n;
+        }
+        num = ''+num;
+        while (num.length < len) {
+            num = '0'+num;
+        }
+        return num;
+    };
+});
+
 app.config([
 '$stateProvider',
 '$urlRouterProvider',
 function($stateProvider, $urlRouterProvider) {
 
   $stateProvider
+    .state('home', {
+        url: '/home',
+        templateUrl: '/home.html',
+        controller: 'homeCtrl'
+    })
+
     .state('quiz', {
       url: '/quiz',
       templateUrl: '/quiz.html',
@@ -223,5 +301,5 @@ function($stateProvider, $urlRouterProvider) {
       controller: 'resultCtrl'
     });
 
-  $urlRouterProvider.otherwise('quiz');
+  $urlRouterProvider.otherwise('home');
 }]);
