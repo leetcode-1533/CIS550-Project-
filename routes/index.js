@@ -14,8 +14,8 @@ require('../models/leaderboard');
 var MongoClinet = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 var url = 'mongodb://kirasev:Kirasev101@ds159237.mlab.com:59237/sqlympics';
-
 var Quiz = mongoose.model('Quiz');
+
 var leaderboard = mongoose.model('leaderboard');
 
 var mysql = require('mysql');
@@ -29,35 +29,57 @@ var connection = mysql.createConnection({
 });
 
 router.get('/get_leaders', function(req, res) {
-    leaderboard.find({"mode":"Easy"},function(err, Easy) {
-        if(err) {
+    leaderboard.find({"mode": "Easy"}, function (err, Easy) {
+        if (err) {
             console.log("Mongo Error");
             console.log(err);
         }
-        leaderboard.find({"mode":"Medium"},function(err, Medium) {
-            if(err) {
+        leaderboard.find({"mode": "Medium"}, function (err, Medium) {
+            if (err) {
                 console.log("Mongo Error");
                 console.log(err);
             }
-            leaderboard.find({"mode":"Hard"},function(err, Hard) {
-                leaderboard.find({"mode":"Rapid"},function(err, Rapid) {
-                    if(err) {
+            leaderboard.find({"mode": "Hard"}, function (err, Hard) {
+                leaderboard.find({"mode": "Rapid"}, function (err, Rapid) {
+                    if (err) {
                         console.log("Mongo Error");
                         console.log(err);
                     }
                     // console.log({"Easy":Easy,"Medium":Medium,"Hard":Hard,"Rapid":Rapid});
-                    res.json({"Easy":Easy,"Medium":Medium,"Hard":Hard,"Rapid":Rapid});
-                }).sort({"score":-1}).limit(10);
-            }).sort({"score":-1}).limit(10);
-        }).sort({"score":-1}).limit(10);
-    }).sort({"score":-1}).limit(10);
+                    res.json({"Easy": Easy, "Medium": Medium, "Hard": Hard, "Rapid": Rapid});
+                }).sort({"score": -1}).limit(10);
+            }).sort({"score": -1}).limit(10);
+        }).sort({"score": -1}).limit(10);
+    }).sort({"score": -1}).limit(10);
+})
+
+    var ddg = require('ddg');
+
+// Remove str2 from str1
+var removestr2 = function(str1, str2) {
+    return str1.replace(new RegExp(str2, 'g'), " ").trim();
+}
+
+router.get('/ddg_hint', function(req, res, next) {
+   ddg.query(req.query["correct_answer"], function(err, data) {
+       results = data.RelatedTopics; //related topics is a list of 'related answers'
+
+       var text;
+       if (data.AbstractText) {
+           text = data.AbstractText;
+       } else {
+           text = results[0].Text;
+       }
+
+       res.send(removestr2(text, req.query["correct_answer"]));
+   });
 });
 
 router.get('/quiz_list', function(req, res, next) {
   MongoClinet.connect(url, function(err, db) {
     if (err) throw err;
 
-    console.log(req.query['total_questions']);
+    // console.log(req.query['total_questions']);
     var questions = db.collection('questions');
     questions.aggregate([ { $sample: { size: parseInt(req.query['total_questions'])} }, {$project:{_id: 1}}]).toArray(function (err, docs) {
           // console.log(docs);
