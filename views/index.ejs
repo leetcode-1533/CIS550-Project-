@@ -10,6 +10,99 @@
 	</head>
 	<body ng-app="quizApp">
 
+	<script type="text/ng-template" id="/leaderboard.html">
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/#/home">Olympics Quiz</a>
+				</div>
+			</div>
+		</nav>
+		<!--{{scores}}-->
+		<div class= "table-responsive" align="center">
+			<h2>LeaderBoard</h2>
+			<ul class="nav nav-tabs" style="width: 80% !important">
+				<li ng-class="{'active': toggle_array[0]==true}" style="cursor: pointer;width: 25%;"><a ng-click="toggle(0)">Easy</a></li>
+				<li ng-class="{'active': toggle_array[1]==true}" style="cursor: pointer;width: 25%;"><a ng-click="toggle(1)">Medium</a></li>
+				<li ng-class="{'active': toggle_array[2]==true}" style="cursor: pointer;width: 25%;"><a ng-click="toggle(2)">Hard</a></li>
+				<li ng-class="{'active': toggle_array[3]==true}" style="cursor: pointer;width: 25%;"><a ng-click="toggle(3)">Rapid Fire</a></li>
+			</ul>
+			<div class="tab-content">
+				<div ng-show="toggle_array[0]==true">
+					<table class="table table-bordered table-inverse table-striped table-hover text-center" style="width: 80% !important;">
+						<thead>
+						<tr>
+							<th style="text-align: center">#</th>
+							<th style="text-align: center">UserName</th>
+							<th style="text-align: center">Score</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr ng-repeat="i in scores['Easy']">
+							<td class="col-md-2">{{$index+1}}.</td>
+							<td class="col-md-8">{{i["user_id"]}}</td>
+							<td class="col-md-2">{{i["score"]}}</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+				<div ng-show="toggle_array[1]==true">
+					<table class="table table-bordered table-inverse table-striped table-hover text-center" style="width: 80% !important;">
+						<thead>
+						<tr>
+							<th style="text-align: center">#</th>
+							<th style="text-align: center">UserName</th>
+							<th style="text-align: center">Score</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr ng-repeat="i in scores['Medium']">
+							<td class="col-md-2">{{$index+1}}.</td>
+							<td class="col-md-8">{{i["user_id"]}}</td>
+							<td class="col-md-2">{{i["score"]}}</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+				<div ng-show="toggle_array[2]==true">
+					<table class="table table-bordered table-inverse table-striped table-hover text-center" style="width: 80% !important;">
+						<thead>
+						<tr>
+							<th style="text-align: center">#</th>
+							<th style="text-align: center">UserName</th>
+							<th style="text-align: center">Score</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr ng-repeat="i in scores['Hard']">
+							<td class="col-md-2">{{$index+1}}.</td>
+							<td class="col-md-8">{{i["user_id"]}}</td>
+							<td class="col-md-2">{{i["score"]}}</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+				<div ng-show="toggle_array[3]==true">
+					<table class="table table-bordered table-inverse table-striped table-hover text-center" style="width: 80% !important;">
+						<thead>
+						<tr>
+							<th style="text-align: center">#</th>
+							<th style="text-align: center">UserName</th>
+							<th style="text-align: center">Score</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr ng-repeat="i in scores['Rapid']">
+							<td class="col-md-2">{{$index+1}}.</td>
+							<td class="col-md-8">{{i["user_id"]}}</td>
+							<td class="col-md-2">{{i["score"]}}</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</script>
 		<script type="text/ng-template" id="/home.html">
 			<nav class="navbar navbar-default">
 			  	<div class="container-fluid">

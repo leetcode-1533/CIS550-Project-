@@ -14,7 +14,7 @@ var mongoose = require('mongoose');
 // require('./models/Quiz');
 
 mongoose.connect('mongodb://kirasev:Kirasev101@ds159237.mlab.com:59237/sqlympics');
-
+require('./models/leaderboard');
 require('./models/Quiz');
 
 // view engine setup

@@ -13,6 +13,30 @@ app.controller('homeCtrl', ['$scope', '$http', 'myService', function($scope, $ht
     }
 }]);
 
+app.controller('leaderboarCtrl', ['$scope', '$http', function($scope, $http){
+    $http({
+        url: '/get_leaders',
+        method: 'GET'
+    }).success(function(data) {
+            $scope.scores= data;
+        });
+    $scope.toggle_array = [];
+    $scope.toggle_array[0] = true;
+    $scope.toggle_array[1] = false;
+    $scope.toggle_array[2] = false;
+    $scope.toggle_array[3] = false;
+    $scope.toggle = function(tab_no) {
+        for(var i=0;i<4;i++) {
+            if (i == tab_no) {
+                $scope.toggle_array[i] = true;
+            }
+            else $scope.toggle_array[i] = false
+        }
+        console.log($scope.toggle_array)
+    }
+}]);
+
+
 app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', function($scope, $http, $timeout, myService){
 
     var recieved_data = myService.get();
@@ -326,7 +350,12 @@ function($stateProvider, $urlRouterProvider) {
       url: '/result',
       templateUrl: '/result.html',
       controller: 'resultCtrl'
-    });
+    })
 
+    .state('leaderboard', {
+        url: '/leaderboard',
+        templateUrl: '/leaderboard.html',
+        controller: 'leaderboarCtrl'
+    });
   $urlRouterProvider.otherwise('home');
 }]);
