@@ -116,12 +116,15 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
         var timer = $timeout($scope.onTimeout, 1000);
     }
     $scope.loading = true;
+    $scope.show_hint = false;
 
     $scope.get_next_question = function() {
 
         $scope.loading = true;
+        $scope.show_hint = false;
 
-    	// console.log($scope.user_answer);
+
+        // console.log($scope.user_answer);
     	if ($scope.user_answer.correct == true) {
 	    	$scope.questions[$scope.question]['user_answer'] = true;
 	    	$scope.correct_answers = $scope.correct_answers + 1;
@@ -184,17 +187,17 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
     	if($scope.hints_remaining > 0){
 	    	$scope.questions[$scope.question]['hint_taken'] = true;
 	    	$scope.hints_remaining = $scope.hints_remaining - 1;
-	    	
-	    	var count = 0;
-	    	answers = $scope.questions[$scope.question]['options'];
-	    	for(var i=0;i<answers.length;i++){
-	    		if(answers[i].correct == false && count < 2) {
-	    			answers[i].disabled = true;
-	    			count = count + 1;
-	    			// console.log(count);
-	    		}
-	    		// console.log($scope.questions[$scope.question]);
-	    	}
+            $scope.show_hint = true;
+
+            $http({
+                url: '/ddg_hint',
+                method: "GET",
+                params: {correct_answer: $scope.questions[$scope.question]["correct_answer"]}
+            }).success(function(data) {
+                // console.log($scope.questions[$scope.question]["correct_answer"]);
+                // console.log();
+                $scope.current_hint = data;
+            });
 	    }
     }
 

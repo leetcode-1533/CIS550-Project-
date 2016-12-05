@@ -96,6 +96,11 @@
 					        	<input type="radio" name="user_answer" ng-model="$parent.user_answer" ng-value="{{option}}" ng-disabled="option.disabled"/>({{$index | numberToAlphabet}}.) {{option.answerText}}
 					        </div> -->
 				        </div>
+
+						<div ng-show="show_hint==true" vertical-align: top>
+							Hint: {{current_hint}}
+						</div>
+
 				        <div style="float: left; width: 50%; margin-top: 5%">
 				            <button class="btn btn-warning" style="float: left; width: 50%; margin: 5%" ng-click="get_hint()" ng-disabled="questions[question]['hint_taken'] || hints_remaining == 0">Hint</button>
 				        </div>
