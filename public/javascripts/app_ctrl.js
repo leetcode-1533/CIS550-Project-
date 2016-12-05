@@ -207,11 +207,29 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
         $scope.get_next_question();        
     }, 1000);
 
+    // $scope.get_hint = function() {
+    //     if($scope.hints_remaining > 0){
+    //         $scope.questions[$scope.question]['hint_taken'] = true;
+    //         $scope.hints_remaining = $scope.hints_remaining - 1;
+    //
+    //         var count = 0;
+    //         answers = $scope.questions[$scope.question]['options'];
+    //         for(var i=0;i<answers.length;i++){
+    //             if(answers[i].correct == false && count < 2) {
+    //                 answers[i].disabled = true;
+    //                 count = count + 1;
+    //                 // console.log(count);
+    //             }
+    //             // console.log($scope.questions[$scope.question]);
+    //         }
+    //     }
+    // }
     $scope.get_hint = function() {
     	if($scope.hints_remaining > 0){
 	    	$scope.questions[$scope.question]['hint_taken'] = true;
 	    	$scope.hints_remaining = $scope.hints_remaining - 1;
             $scope.show_hint = true;
+            $scope.current_hint = "";
 
             $http({
                 url: '/ddg_hint',
@@ -346,6 +364,12 @@ function($stateProvider, $urlRouterProvider) {
       controller: 'questionsCtrl'
     })
 
+    .state('sqlform', {
+       url: '/newquestion',
+       templateUrl: '/sqlform.html',
+       controller: 'sqlform'
+    })
+
     .state('result', {
       url: '/result',
       templateUrl: '/result.html',
@@ -357,5 +381,6 @@ function($stateProvider, $urlRouterProvider) {
         templateUrl: '/leaderboard.html',
         controller: 'leaderboarCtrl'
     });
+
   $urlRouterProvider.otherwise('home');
 }]);
