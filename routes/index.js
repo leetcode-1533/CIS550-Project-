@@ -9,11 +9,15 @@ router.get('/', function(req, res, next) {
 
 var mongoose = require('mongoose');
 require('../models/Quiz');
+require('../models/leaderboard');
 
 var MongoClinet = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 var url = 'mongodb://kirasev:Kirasev101@ds159237.mlab.com:59237/sqlympics';
 var Quiz = mongoose.model('Quiz');
+
+var leaderboard = mongoose.model('leaderboard');
+
 var mysql = require('mysql');
 
 var connection = mysql.createConnection({
@@ -24,7 +28,32 @@ var connection = mysql.createConnection({
   database : 'olympic_quiz'
 });
 
-var ddg = require('ddg');
+router.get('/get_leaders', function(req, res) {
+    leaderboard.find({"mode": "Easy"}, function (err, Easy) {
+        if (err) {
+            console.log("Mongo Error");
+            console.log(err);
+        }
+        leaderboard.find({"mode": "Medium"}, function (err, Medium) {
+            if (err) {
+                console.log("Mongo Error");
+                console.log(err);
+            }
+            leaderboard.find({"mode": "Hard"}, function (err, Hard) {
+                leaderboard.find({"mode": "Rapid"}, function (err, Rapid) {
+                    if (err) {
+                        console.log("Mongo Error");
+                        console.log(err);
+                    }
+                    // console.log({"Easy":Easy,"Medium":Medium,"Hard":Hard,"Rapid":Rapid});
+                    res.json({"Easy": Easy, "Medium": Medium, "Hard": Hard, "Rapid": Rapid});
+                }).sort({"score": -1}).limit(10);
+            }).sort({"score": -1}).limit(10);
+        }).sort({"score": -1}).limit(10);
+    }).sort({"score": -1}).limit(10);
+})
+
+    var ddg = require('ddg');
 
 // Remove str2 from str1
 var removestr2 = function(str1, str2) {
