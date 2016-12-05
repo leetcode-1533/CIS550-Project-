@@ -172,13 +172,11 @@
 								</div>
 							</div>
 
-							<div>
-								<div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-									<input type="button" class="btn btn-warning" style="margin: 16px; margin-right: 0px; width: 100%; float: left" ng-click="reset()" value="Reset" />
-								</div>
-								<div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-									<input type="submit" class="btn btn-warning" style="margin: 16px; margin-right: 0px; width: 100%; float: right" ng-click="sqldemo(sqlform)" value="Generate Demo Question" />
-								</div>
+							<div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+								<input type="button" class="btn btn-warning" style="margin: 16px; margin-right: 0px; width: 100%; float: left" ng-click="reset()" value="Reset" />
+							</div>
+							<div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+								<input type="submit" class="btn btn-warning" style="margin: 16px; margin-right: 0px; width: 100%; float: right" ng-click="sqldemo(sqlform)" value="Generate Demo Question" />
 							</div>
 
 							<div style="margin-top: 70px">
@@ -201,8 +199,12 @@
 								</div>
 							</div>
 
-							<div ng-show="uploadReady">
-								<input type="submit" ng-click="sqlUpload(sqlform)" value="Upload To database" ng-disabled="waiting_variable==true" />
+							<div ng-show="uploadReady" >
+								<input type="submit" class="btn btn-success" ng-click="sqlUpload(sqlform)" value="Upload To database" ng-disabled="pauseUpload" />
+							</div>
+
+							<div ng-show="uploaderMessage != null">
+								{{uploaderMessage}}
 							</div>
 
 						</form>

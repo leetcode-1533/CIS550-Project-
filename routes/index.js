@@ -116,7 +116,7 @@ router.get('/newquestion/validateRightSql', function(req, res){
 router.post('/newquestion/addquiz', function(req, res, next) {
     MongoClinet.connect(url, function(err, db) {
         db.collection("questions").insertOne(req.body, function(err, result) {
-            console.log(err);
+            // console.log(err);
             db.close();
         });
     });

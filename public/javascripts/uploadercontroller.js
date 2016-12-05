@@ -8,6 +8,7 @@ app.controller('sqlform', [
     function($scope, $http, $timeout) {
         var RightSqlAnswer = null;
         var AlternativeSqlAnswer = null;
+
         $scope.sqlform = {};
 
         $scope.reset = function() {
@@ -20,6 +21,8 @@ app.controller('sqlform', [
             $scope.uploadReady = false;
             $scope.UploadSqlMessage = '';
             $scope.UploadSqlAlertType = '';
+            $scope.uploaderMessage = '';
+            $scope.pauseUpload = false;
         };
 
 
@@ -109,34 +112,26 @@ app.controller('sqlform', [
                         {"answerText":AlternativeSqlAnswer[2]['options'], "correct": false}
                     ]
                 };
-                // console.log($scope.questions);
             }
         }
 
+        $scope.pauseUpload = false;
         $scope.sqlUpload = function(sqlform) {
-            $scope.waiting_variable = true;
-
             if(!((RightSqlAnswer!=null) && (AlternativeSqlAnswer != null))) {
-                $scope.uploadReady = false;
-                console.log("Data Not Ready");
+                $scope.uploaderMessage = "Data Not Ready";
+                return;
             } else {
-                $scope.uploadReady = true;
-
                 var dataobject = {
                     options: sqlform.wrongsql,
                     question: sqlform.sqlquestion,
                     questionquery: sqlform.rightsql
                 };
-
                 $http.post('/newquestion/addquiz', dataobject).then(function(data) {
-                        console.log("Upload Success");
-                    var temp = $timeout(function (){
-                        $scope.waiting_variable = false;
-
-                    }, 10000)
-
-                    console.log($scope.waiting_variable);
+                    $scope.uploaderMessage = "Upload Success";
                 });
+                $scope.uploaderMessage = "Upload Success";
+                $scope.pauseUpload = true;
+                return;
             }
         }
     }
