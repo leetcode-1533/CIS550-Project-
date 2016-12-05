@@ -139,15 +139,15 @@
 						<form novalidate class="simple-form">
 							<div>
 								<h5>Question String:</h5>
-								<textarea ng-model = "sqlform.sqlquestion" id= "sqlquestion" cols="30" rows="3"></textarea> </br>
+								<textarea class="form-control ng-valid ng-dirty ng-valid-parse ng-touched" ng-model = "sqlform.sqlquestion" id= "sqlquestion" cols="30" rows="3"></textarea> </br>
 							</div>
 
 							<div>
 								<h5>Correct Answer SQL: </h5>
-								<textarea ng-model = "sqlform.rightsql" id= "rightsql" cols="30" rows="3"></textarea></br>
+								<textarea class="form-control ng-valid ng-dirty ng-valid-parse ng-touched" ng-model = "sqlform.rightsql" id= "rightsql" cols="30" rows="3"></textarea></br>
 
 								<div>
-									<input type="button" ng-click="validateRight(1)" value="validateRight" /></br>
+									<input type="button" class="btn btn-success" ng-click="validateRight(1)" value="validateRight" /></br>
 								</div>
 
 								<div class="alert {{RightSqlAlertType}}" ng-show="RightSqlShow">
@@ -158,10 +158,10 @@
 
 							<div>
 								<h5>Alternative Answer SQL:</h5>
-								<textarea ng-model = "sqlform.wrongsql" id= "wrongsql" cols="30" rows="3"></textarea></br>
+								<textarea class="form-control ng-valid ng-dirty ng-valid-parse ng-touched" ng-model = "sqlform.wrongsql" id= "wrongsql" cols="30" rows="3"></textarea></br>
 
 								<div>
-									<input type="button" ng-click="validateAlter(3)" value="validateAlter" /></br>
+									<input type="button" class="btn btn-success" ng-click="validateAlter(3)" value="validateAlter" /></br>
 								</div>
 
 								<div class="alert {{AlterSqlAlertType}}" ng-show="AlterSqlShow">
@@ -173,8 +173,7 @@
 							</div>
 
 
-
-							<input type="button" style="margin: 16px; margin-left: 0px; width: 100%" ng-click="reset()" value="Reset" />
+							<input type="button" class="btn btn-warning" style="margin: 16px; margin-left: 0px; width: 100%" ng-click="reset()" value="Reset" />
 							<input type="submit" style="margin: 16px; margin-left: 0px; width: 100%" ng-click="sqldemo(sqlform)" value="Generate Demo Question" />
 							<div class="alert {{UploadSqlAlertType}}" ng-show="UploadSqlShow">
 								<strong><preline>{{UploadSqlMessage}}</preline></strong>

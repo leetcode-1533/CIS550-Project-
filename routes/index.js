@@ -108,6 +108,7 @@ router.get('/newquestion/validateRightSql', function(req, res){
             res.status(500).send("There Should be ".concat(req.query['Requiredlength']) + " Correct Answer whereas \n I got: ".concat(row.length.toString()).concat(" answers"));
             return;
         }
+        console.log(row);
         res.status(201).send(row);
     })
 });
@@ -118,9 +119,6 @@ router.post('/newquestion/addquiz', function(req, res, next) {
             console.log(err);
             db.close();
         });
-        // insertDocument(db, req.body, function() {
-        //   db.close();
-        // });
     });
 });
 
