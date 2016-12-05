@@ -340,11 +340,18 @@ function($stateProvider, $urlRouterProvider) {
       controller: 'questionsCtrl'
     })
 
+    .state('sqlform', {
+       url: '/newquestion',
+       templateUrl: '/sqlform.html',
+       controller: 'sqlform'
+    })
+
     .state('result', {
       url: '/result',
       templateUrl: '/result.html',
       controller: 'resultCtrl'
     });
+
 
   $urlRouterProvider.otherwise('home');
 }]);

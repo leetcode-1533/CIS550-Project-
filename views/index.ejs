@@ -6,6 +6,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
 		<script src="/javascripts/app_ctrl.js"></script>
+		<script src="/javascripts/uploadercontroller.js"></script>
 		<title>Quiz!</title>
 	</head>
 	<body ng-app="quizApp">
@@ -113,6 +114,53 @@
 				    </div>
 				</div>
 			</div>
+		</script>
+
+		<script type="text/ng-template" id="/sqlform.html">
+			<h3>Upload New Question</h3>
+
+			<form novalidate class="simple-form">
+				<label>Question String:</label> </br>
+				<textarea ng-model = "sqlform.sqlquestion" id= "sqlquestion" cols="30" rows="3"></textarea> </br>
+				<label>Correct Answer SQL: </label> </br>
+				<textarea ng-model = "sqlform.rightsql" id= "rightsql" cols="30" rows="3"></textarea></br>
+
+				<input type="button" ng-click="validateRight(1)" value="validateRight" /></br>
+				<div class="alert {{RightSqlAlertType}}" ng-show="RightSqlShow">
+					</button> <strong><preline>{{RightSqlWrongMessage}}</preline></strong>
+				</div>
+
+				<label>Alternative Answer SQL:</label> </br>
+				<textarea ng-model = "sqlform.wrongsql" id= "wrongsql" cols="30" rows="3"></textarea></br>
+				<input type="button" ng-click="validateAlter(3)" value="validateAlter" /></br>
+
+				<div class="alert {{AlterSqlAlertType}}" ng-show="AlterSqlShow">
+					<strong><preline>{{AlterSqlWrongMessage}}</preline></strong>
+					<li ng-repeat="item in alternativeData">
+						{{item["options"]}}
+					</li>
+				</div>
+
+				<input type="button" ng-click="reset()" value="Reset" />
+				<input type="submit" ng-click="sqldemo(sqlform)" value="Generate Demo Question" />
+				<div class="alert {{UploadSqlAlertType}}" ng-show="UploadSqlShow">
+					<strong><preline>{{UploadSqlMessage}}</preline></strong>
+
+					<div class="row">
+						<div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1" style="margin-top: 10%;">
+							<h3 style="text-align: center">{{questions.question}}</h3>
+							<div style="width: 100%; margin-top: 40px">
+
+								<div ng-repeat="option in questions.options" style="width: 100%">
+									<input type="radio" name="user_answer" ng-model="$parent.user_answer" ng-value="{{option}}" ng-disabled="option.disabled"/>({{$index}}.) {{option.answerText}}
+								</div>
+							</div>
+						</div></br>
+						<input type="submit" ng-click="sqlUpload(sqlform)" value="Upload To database" ng-disabled="waiting_variable==true" />
+					</div>
+				</div>
+
+			</form>
 		</script>
 
 		<script type="text/ng-template" id="/result.html">

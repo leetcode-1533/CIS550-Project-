@@ -98,4 +98,30 @@ router.get('/test_http', function(req, res, next) {
   });
 });
 
+router.get('/newquestion/validateRightSql', function(req, res){
+    connection.query(req.query['RightSql'], function(err, row) {
+        if(err) {
+            res.status(500).send(err);
+            return;
+        }
+        if(row.length != req.query['Requiredlength']) {
+            res.status(500).send("There Should be ".concat(req.query['Requiredlength']) + " Correct Answer whereas \n I got: ".concat(row.length.toString()).concat(" answers"));
+            return;
+        }
+        res.status(201).send(row);
+    })
+});
+
+router.post('/newquestion/addquiz', function(req, res, next) {
+    MongoClinet.connect(url, function(err, db) {
+        db.collection("questions").insertOne(req.body, function(err, result) {
+            console.log(err);
+            db.close();
+        });
+        // insertDocument(db, req.body, function() {
+        //   db.close();
+        // });
+    });
+});
+
 module.exports = router;
