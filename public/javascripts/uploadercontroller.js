@@ -17,8 +17,9 @@ app.controller('sqlform', [
             $scope.alternativeData = {};
             RightSqlAnswer = null;
             AlternativeSqlAnswer = null;
-            $scope.UploadSqlShow = false;
-
+            $scope.uploadReady = false;
+            $scope.UploadSqlMessage = '';
+            $scope.UploadSqlAlertType = '';
         };
 
 
@@ -87,15 +88,16 @@ app.controller('sqlform', [
         };
 
         $scope.sqldemo = function(sqlform) {
-            console.log(sqlform);
-            $scope.UploadSqlShow = true;
-
             if(!((RightSqlAnswer!=null) && (AlternativeSqlAnswer != null))) {
+                $scope.uploadReady = false;
                 $scope.UploadSqlMessage = "Please Pass each test First";
                 $scope.UploadSqlAlertType = "alert-danger";
                 $scope.questions = {};
             } else {
-                $scope.UploadSqlAlertType = "success";
+                $scope.uploadReady = true;
+
+                $scope.UploadSqlMessage = '';
+                $scope.UploadSqlAlertType = "alert-success"
 
                 $scope.questions =
                 {"question": $scope.sqlform.sqlquestion,
@@ -107,7 +109,7 @@ app.controller('sqlform', [
                         {"answerText":AlternativeSqlAnswer[2]['options'], "correct": false}
                     ]
                 };
-                console.log($scope.questions);
+                // console.log($scope.questions);
             }
         }
 
@@ -115,8 +117,11 @@ app.controller('sqlform', [
             $scope.waiting_variable = true;
 
             if(!((RightSqlAnswer!=null) && (AlternativeSqlAnswer != null))) {
+                $scope.uploadReady = false;
                 console.log("Data Not Ready");
             } else {
+                $scope.uploadReady = true;
+
                 var dataobject = {
                     options: sqlform.wrongsql,
                     question: sqlform.sqlquestion,
