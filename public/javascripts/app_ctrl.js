@@ -376,6 +376,12 @@ function($stateProvider, $urlRouterProvider) {
       controller: 'resultCtrl'
     })
 
+    .state('ngtable', {
+      url: '/ngtable',
+      templateUrl: '/ngtable.html',
+      controller: 'ngTableCtrl'
+    })
+
     .state('leaderboard', {
         url: '/leaderboard',
         templateUrl: '/leaderboard.html',
