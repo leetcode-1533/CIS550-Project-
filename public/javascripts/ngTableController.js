@@ -12,8 +12,8 @@ app.filter('startFrom', function() {
 });
 app.controller('ngTableCtrl', function ($scope, $http, $timeout) {
     $http.get('/ngtable/test').success(function(data){
-        console.log(data);
         $scope.list = data;
+        $scope.cloumns = ["code", "country_name"];
         $scope.currentPage = 1; //current page
         $scope.entryLimit = 5; //max no of items to display in a page
         $scope.filteredItems = $scope.list.length; //Initially for no filter
