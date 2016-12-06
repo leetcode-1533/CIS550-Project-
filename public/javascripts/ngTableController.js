@@ -11,14 +11,22 @@ app.filter('startFrom', function() {
     }
 });
 app.controller('ngTableCtrl', function ($scope, $http, $timeout) {
-    $http.get('/ngtable/test').success(function(data){
-        $scope.list = data;
-        $scope.cloumns = Object.keys(data[0]);
-        $scope.currentPage = 1; //current page
-        $scope.entryLimit = 5; //max no of items to display in a page
-        $scope.filteredItems = $scope.list.length; //Initially for no filter
-        $scope.totalItems = $scope.list.length;
-    });
+    $scope.list = [];
+    $scope.columns = [];
+    $scope.currentPage = 1; //current page
+    $scope.entryLimit = 5; //max no of items to display in a page
+    $scope.filteredItems = 0; //Initially for no filter
+    $scope.totalItems = 0;
+
+    $scope.execute_sql = function() {
+        $http.get('/ngtable/test').success(function(data){
+            $scope.list = data;
+            $scope.columns = Object.keys(data[0]);
+            $scope.filteredItems = $scope.list.length; //Initially for no filter
+            $scope.totalItems = $scope.list.length;
+        });
+    }
+
 
     $scope.setPage = function(pageNo) {
         $scope.currentPage = pageNo;

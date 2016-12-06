@@ -310,6 +310,14 @@
 		<script type="text/ng-template" id="/ngtable.html">
 			<div class="container">
 				<div class="row">
+					<div>
+						<h5>SQL Select</h5>
+						<textarea class="form-control ng-valid ng-dirty ng-valid-parse ng-touched" ng-model = "sqlform.sqlquestion" id= "sqlquestion" cols="30" rows="3"></textarea> </br>
+						<div>
+							<input type="button" class="btn btn-success" ng-click="execute_sql()" value="update" /></br>
+						</div>
+					</div>
+
 					<div class="col-md-2">PageSize:
 						<select ng-model="entryLimit" class="form-control">
 							<option>5</option>
@@ -332,12 +340,12 @@
 					<div class="col-md-12" ng-show="filteredItems > 0">
 						<table class="table table-striped table-bordered">
 							<thead>
-								<td ng-repeat="th in cloumns">{{th}}&nbsp;<a ng-click="sort_by('th');"><i class="glyphicon glyphicon-sort"></i></a></td>
+								<td ng-repeat="th in columns">{{th}}&nbsp;<a ng-click="sort_by('th');"><i class="glyphicon glyphicon-sort"></i></a></td>
 							</thead>
 
 							<tbody>
 							<tr ng-repeat="data in filtered = (list | filter:search | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
-								<td ng-repeat="th in cloumns">
+								<td ng-repeat="th in columns">
 									{{data[th]}}
 								</td>
 							</tr>
@@ -346,7 +354,7 @@
 					</div>
 					<div class="col-md-12" ng-show="filteredItems == 0">
 						<div class="col-md-12">
-							<h4>No customers found</h4>
+							<h4>No data found</h4>
 						</div>
 					</div>
 					<div class="col-md-12" ng-show="filteredItems > 0">
