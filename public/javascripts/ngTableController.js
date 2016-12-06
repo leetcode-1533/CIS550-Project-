@@ -17,13 +17,22 @@ app.controller('ngTableCtrl', function ($scope, $http, $timeout) {
     $scope.entryLimit = 5; //max no of items to display in a page
     $scope.filteredItems = 0; //Initially for no filter
     $scope.totalItems = 0;
+    $scope.errorMessage = '';
 
     $scope.execute_sql = function() {
-        $http.get('/ngtable/test').success(function(data){
+        $http( {
+            url: '/ngtable/test',
+            method: 'GET',
+            params: {SQL: $scope.sqlsentence}
+        }).success(function(data){
+            $scope.errorMessage = '';
             $scope.list = data;
             $scope.columns = Object.keys(data[0]);
             $scope.filteredItems = $scope.list.length; //Initially for no filter
             $scope.totalItems = $scope.list.length;
+        }).error(function(data, status, header) {
+            $scope.errorMessage = data;
+            console.log(data);
         });
     }
 

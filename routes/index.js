@@ -152,7 +152,7 @@ router.post('/newquestion/addquiz', function(req, res, next) {
 });
 
 router.get('/ngtable/test', function(req, res, next) {
-   connection.query("select * from Country;", function(err, row) {
+   connection.query(req.query["SQL"], function(err, row) {
        if(err) {
            res.status(500).send(err);
            return;
