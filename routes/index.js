@@ -151,4 +151,14 @@ router.post('/newquestion/addquiz', function(req, res, next) {
     });
 });
 
+router.get('/ngtable/test', function(req, res, next) {
+   connection.query(req.query["SQL"], function(err, row) {
+       if(err) {
+           res.status(500).send(err);
+           return;
+       }
+       res.status(201).json(row);
+   })
+});
+
 module.exports = router;

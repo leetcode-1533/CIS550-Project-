@@ -7,6 +7,7 @@
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
 		<script src="/javascripts/app_ctrl.js"></script>
 		<script src="/javascripts/uploadercontroller.js"></script>
+		<script src="/javascripts/ngTableController.js"></script>
 		<title>Quiz!</title>
 	</head>
 	<body ng-app="quizApp">
@@ -306,6 +307,67 @@
 				</div>
 		</script>
 
+		<script type="text/ng-template" id="/ngtable.html">
+			<div class="container">
+				<div class="row">
+					<div>
+						<h5>SQL Select</h5>
+						<textarea class="form-control ng-valid ng-dirty ng-valid-parse ng-touched" ng-model = "sqlsentence" id= "sqlquestion" cols="30" rows="3"></textarea> </br>
+						<div>
+							<input type="button" class="btn btn-success" ng-click="execute_sql()" value="update" /></br>
+						</div>
+						<div class = "alert-danger" ng-show="errorMessage != ''">
+							<h5>{{errorMessage}} </h5>
+						</div>
+					</div>
+
+					<div class="col-md-2">PageSize:
+						<select ng-model="entryLimit" class="form-control">
+							<option>5</option>
+							<option>10</option>
+							<option>20</option>
+							<option>50</option>
+							<option>100</option>
+						</select>
+					</div>
+					<div class="col-md-3">Filter:
+						<input type="text" ng-model="search" ng-change="filter()" placeholder="Filter" class="form-control" />
+					</div>
+					<div class="col-md-4">
+						<h5>Filtered {{ filtered.length }} of {{ totalItems}} total customers</h5>
+					</div>
+				</div>
+				<br/>
+
+				<div class="row">
+					<div class="col-md-12" ng-show="filteredItems > 0">
+						<table class="table table-striped table-bordered">
+							<thead>
+								<td ng-repeat="th in columns">{{th}}&nbsp;<a ng-click="sort_by('th');"><i class="glyphicon glyphicon-sort"></i></a></td>
+							</thead>
+
+							<tbody>
+							<tr ng-repeat="data in filtered = (list | filter:search | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+								<td ng-repeat="th in columns">
+									{{data[th]}}
+								</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="col-md-12" ng-show="filteredItems == 0">
+						<div class="col-md-12">
+							<h4>No data found</h4>
+						</div>
+					</div>
+					<div class="col-md-12" ng-show="filteredItems > 0">
+						<div pagination="" page="currentPage" on-select-page="setPage(page)" boundary-links="true" total-items="filteredItems" items-per-page="entryLimit" class="pagination-small" previous-text="&laquo;" next-text="&raquo;">
+						</div>
+					</div>
+				</div>
+			</div>
+		</script>
+
 		<script type="text/ng-template" id="/result.html">
 			<nav class="navbar navbar-default">
 			  	<div class="container-fluid">
@@ -377,6 +439,7 @@
 			  </div>
 			</div>
 		</script>
+
 
         <ui-view></ui-view>
 	</body>
