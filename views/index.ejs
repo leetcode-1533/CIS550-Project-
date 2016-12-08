@@ -398,7 +398,7 @@
 				        		<td class="col-md-1">{{$index+1}}.</td>
 				        		<td class="col-md-8">{{question.question}}</td>
 				        		<td class="col-md-3" ng-class="question.user_answer==true?'btn-success':'btn-danger'">
-				        			({{question.correct_option | numberToAlphabet}}.) {{question.correct_answer}} 
+				        			({{question.correct_option | numberToAlphabet}}.) <a href="https://google.com/search?&q={{question.correct_answer}}">{{question.correct_answer}}</a>
 					        		<span ng-if="question.hint_taken==true && question.user_answer==true">(+5)</span>
 					        		<span ng-if="question.hint_taken==true && question.user_answer==false">(0)</span>
 					        		<span ng-if="question.hint_taken==false && question.user_answer==true">(+10)</span>
