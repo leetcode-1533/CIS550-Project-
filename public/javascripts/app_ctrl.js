@@ -18,8 +18,8 @@ app.controller('leaderboarCtrl', ['$scope', '$http', function($scope, $http){
         url: '/get_leaders',
         method: 'GET'
     }).success(function(data) {
-            $scope.scores= data;
-        });
+        $scope.scores= data;
+    });
     $scope.toggle_array = [];
     $scope.toggle_array[0] = true;
     $scope.toggle_array[1] = false;
@@ -266,8 +266,9 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
     		"hints_remaining": $scope.hints_remaining,
             "hints_given": $scope.hints_given,
             "username": $scope.username,
-            "level": recieved_data.level 
+            "level": $scope.level_display 
     	}
+        console.log(sending_data);
     	myService.set(sending_data);
     	window.location = '/#/result';
     }
@@ -280,7 +281,7 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
             "hints_remaining": $scope.hints_remaining,
             "hints_given": $scope.hints_given,
             "username": $scope.username,
-            "level": recieved_data.level 
+            "level": $scope.level_display 
         }
         myService.set(sending_data);
         window.location = '/#/result';
@@ -297,7 +298,24 @@ app.controller('resultCtrl',['$scope', '$http', 'myService', function($scope, $h
     $scope.hints_given = all_data.hints_given;
 	$scope.hints_used = $scope.hints_given - $scope.hints_remaining;
 
-    $scope.username = "";
+    if(all_data!=null && all_data.length!=0){
+        if(all_data.username!="" && all_data.username!="Anonymous" && all_data.level!="Practice Mode"){
+            console.log("here")
+            console.log(all_data)
+            $http({
+                url: '/update_leaders',
+                method: 'GET',
+                params: {username: all_data.username, level: all_data.level, score: all_data.score}
+            }).success(function(){
+                console.log('success')
+            })
+        }
+    }
+
+    if(all_data.username!=null && all_data.username!="" && angular.isDefined(all_data.username) && all_data.username!="Anonymous")
+        $scope.username = all_data.username;
+    else $scope.username = "";
+    // console.log(all_data);
 
     $scope.go_to_quiz = function(level) {
         var sending_data = {

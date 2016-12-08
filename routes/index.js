@@ -40,7 +40,7 @@ router.get('/get_leaders', function(req, res) {
                 console.log(err);
             }
             leaderboard.find({"mode": "Hard"}, function (err, Hard) {
-                leaderboard.find({"mode": "Rapid"}, function (err, Rapid) {
+                leaderboard.find({"mode": "Rapid Fire"}, function (err, Rapid) {
                     if (err) {
                         console.log("Mongo Error");
                         console.log(err);
@@ -51,6 +51,25 @@ router.get('/get_leaders', function(req, res) {
             }).sort({"score": -1}).limit(10);
         }).sort({"score": -1}).limit(10);
     }).sort({"score": -1}).limit(10);
+})
+
+router.get('/update_leaders', function(req, res) {
+  console.log(req.query['username'])
+  console.log(req.query['score'])
+  console.log(req.query['level'])
+
+  leaderboard.collection.insertOne({
+    user_id: req.query['username'],
+    score: req.query['score'],
+    mode: req.query['level']
+  }, function(err, data) {
+    if(err) {
+      console.log("Mongo error")
+    }
+    if(data) {
+      console.log(data)
+    }
+  });
 })
 
     var ddg = require('ddg');
