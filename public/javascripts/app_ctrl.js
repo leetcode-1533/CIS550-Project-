@@ -176,12 +176,12 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
 	    .success(function (data) {
 	        console.log(data);
             $scope.loading = false;
-
-	        temp_question[$scope.question] = 
+	        temp_question[$scope.question] =
 	            {"question": data['question'], 
 	            "correct_answer": data['answer'][0]['answer'], 
 	            "hint_taken": false, 
 	            "user_answer": false,
+                "correct_ans_url": data['correct_ans_url'],
 	            "options": [
 	                {"answerText":data['answer'][0]['answer'], "correct": true, "disabled": false},
 	                {"answerText":data['answer'][1]['options'], "correct": false, "disabled": false},
@@ -256,6 +256,7 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
     		}
     		else $scope.score = $scope.score + 5;
     	}
+    	console.log($scope.questions);
     	// console.log($scope.score);
     	// console.log($scope.correct_answers);
     	// console.log($scope.questions[$scope.question]);
@@ -267,7 +268,7 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
     		"hints_remaining": $scope.hints_remaining,
             "hints_given": $scope.hints_given,
             "username": $scope.username,
-            "level": $scope.level_display 
+            "level": $scope.level_display,
     	}
         console.log(sending_data);
     	myService.set(sending_data);

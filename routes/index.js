@@ -122,10 +122,14 @@ router.get('/test_http', function(req, res, next) {
   flowController.on('dowork', function(obj) {
     connection.query(obj["questionquery"], function (err, row) {
       connection.query(obj['options'], function (err, options) {
-        if (err) console.log(err);
-        console.log(obj['question']);
-        res.json({"question":obj['question'],
-          "answer":[row[0], options[0],options[1],options[2]]});
+          ddg.query(row[0]["answer"], function(err, ddg_data) {
+              // console.log(ddg_data);
+              if (err) console.log(err);
+              console.log(obj['question']);
+              res.json({"question":obj['question'],
+                  "answer":[row[0], options[0],options[1],options[2]],
+                  "correct_ans_url": ddg_data.AbstractURL});
+          });
       });
     });
   });
