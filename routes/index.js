@@ -72,12 +72,18 @@ router.get('/update_leaders', function(req, res) {
   });
 })
 
-    var ddg = require('ddg');
+var ddg = require('ddg');
 
 // Remove str2 from str1
 var removestr2 = function(str1, str2) {
     return str1.replace(new RegExp(str2, 'g'), " ").trim();
 }
+
+router.get('/ddg_abstract_url', function(req, res, next) {
+    ddg.query("beijing", function(err, data) {
+        res.send(data.AbstractURL);
+    })
+});
 
 router.get('/ddg_hint', function(req, res, next) {
    ddg.query(req.query["correct_answer"], function(err, data) {

@@ -38,6 +38,7 @@ app.controller('leaderboarCtrl', ['$scope', '$http', function($scope, $http){
 
 
 app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', function($scope, $http, $timeout, myService){
+    var total_question = 2; //
 
     var recieved_data = myService.get();
     
@@ -80,7 +81,7 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
 
     function get_question_ids(){
         if(recieved_data.level == 'rapid_fire') var no_of_questions = 20;
-        else var no_of_questions = 10;
+        else var no_of_questions = total_question;
         $http({
             url: '/quiz_list',
             method: 'GET',
@@ -122,7 +123,7 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
         $scope.question_limit = 99999;
     }
     else {
-        $scope.question_limit = 9;
+        $scope.question_limit = total_question - 1;
     }
 
     if(recieved_data.level == 'rapid_fire'){
@@ -298,6 +299,10 @@ app.controller('resultCtrl',['$scope', '$http', 'myService', function($scope, $h
     $scope.hints_given = all_data.hints_given;
 	$scope.hints_used = $scope.hints_given - $scope.hints_remaining;
 
+    // angular.forEach(all_data.correct_answers, function(value, key) {
+    //     console.log(value);
+    // });
+
     if(all_data!=null && all_data.length!=0){
         if(all_data.username!="" && all_data.username!="Anonymous" && all_data.level!="Practice Mode"){
             console.log("here")
@@ -315,7 +320,6 @@ app.controller('resultCtrl',['$scope', '$http', 'myService', function($scope, $h
     if(all_data.username!=null && all_data.username!="" && angular.isDefined(all_data.username) && all_data.username!="Anonymous")
         $scope.username = all_data.username;
     else $scope.username = "";
-    // console.log(all_data);
 
     $scope.go_to_quiz = function(level) {
         var sending_data = {
