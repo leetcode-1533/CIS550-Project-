@@ -38,7 +38,7 @@ app.controller('leaderboarCtrl', ['$scope', '$http', function($scope, $http){
 
 
 app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', function($scope, $http, $timeout, myService){
-    var total_question = 1; //
+    var total_question = 10; //
 
     var recieved_data = myService.get();
     
@@ -299,18 +299,19 @@ app.controller('resultCtrl',['$scope', '$http', 'myService', function($scope, $h
     $scope.hints_given = all_data.hints_given;
 	$scope.hints_used = $scope.hints_given - $scope.hints_remaining;
 
-    $scope.abstr_url = [];
-    // console.log(all_data.questions);
-    for (var i = 0; i < all_data.questions.length; i++) {
-        // console.log(all_data.questions[i]["correct_answer"]);
-        $scope.abstr_url.push({
-            key: all_data.questions[i]["correct_answer"],
-            value: all_data.questions[i]["correct_answer"]
-        });
-        // console.log("test");
-    }
+    $scope.abstr_url = {};
 
-    console.log($scope.abstr_url);
+    for (var i = 0; all_data!=null && all_data.length!=0 && i < all_data.questions.length; i++) {
+        var current_answer = all_data.questions[i]["correct_answer"];
+        $http({
+            url: '/ddg_abstract_url',
+            method: "GET",
+            params: {correct_answer: current_answer}
+        }).success(function(data){
+            $scope.abstr_url[current_answer] = data;
+            // all_data.questions[i].abstr_url
+        });
+    };
 
     if(all_data!=null && all_data.length!=0){
         if(all_data.username!="" && all_data.username!="Anonymous" && all_data.level!="Practice Mode"){

@@ -80,7 +80,7 @@ var removestr2 = function(str1, str2) {
 }
 
 router.get('/ddg_abstract_url', function(req, res, next) {
-    ddg.query("beijing", function(err, data) {
+    ddg.query(req.query["correct_answer"], function(err, data) {
         res.send(data.AbstractURL);
     })
 });

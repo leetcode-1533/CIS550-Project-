@@ -380,6 +380,7 @@
 			    	</ul>
 			  	</div>
 			</nav>
+			{{abstr_url}}
 			<div class="container" style="margin-left: 15%; margin-right: 15%; margin-top: 5%; width: 70%">
 			  	<div ng-show="questions!=null && questions.length!=0">
 				  	<h3 style="text-align: center">You got {{correct_answers}}/{{questions.length}} correct!</h3>
@@ -398,7 +399,7 @@
 				        		<td class="col-md-1">{{$index+1}}.</td>
 				        		<td class="col-md-8">{{question.question}}</td>
 				        		<td class="col-md-3" ng-class="question.user_answer==true?'btn-success':'btn-danger'">
-				        			({{question.correct_option | numberToAlphabet}}.) <a href="https://google.com/search?&q={{question.correct_answer}}">{{question.correct_answer}}</a>
+				        			({{question.correct_option | numberToAlphabet}}.) <a href={{abstr_url[question.correct_answer]}}>{{question.correct_answer}}</a>
 					        		<span ng-if="question.hint_taken==true && question.user_answer==true">(+5)</span>
 					        		<span ng-if="question.hint_taken==true && question.user_answer==false">(0)</span>
 					        		<span ng-if="question.hint_taken==false && question.user_answer==true">(+10)</span>
