@@ -26,14 +26,6 @@ app.controller('leaderboarCtrl', ['$scope', '$http', function($scope, $http){
     $scope.toggle_array[2] = false;
     $scope.toggle_array[3] = false;
 
-    $scope.showPopover = function() {
-        $scope.popoverIsVisible = true;
-    }
-
-    $scope.hidePopover = function() {
-        $scope.popoverIsVisible = false;
-    }
-
     $scope.toggle = function(tab_no) {
         for(var i=0;i<4;i++) {
             if (i == tab_no) {
@@ -47,7 +39,7 @@ app.controller('leaderboarCtrl', ['$scope', '$http', function($scope, $http){
 
 
 app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', function($scope, $http, $timeout, myService){
-    var total_question = 10; //
+    var total_question = 2; //
 
     var recieved_data = myService.get();
     
@@ -330,6 +322,14 @@ app.controller('resultCtrl',['$scope', '$http', 'myService', function($scope, $h
     if(all_data.username!=null && all_data.username!="" && angular.isDefined(all_data.username) && all_data.username!="Anonymous")
         $scope.username = all_data.username;
     else $scope.username = "";
+
+    $scope.hoverIn = function() {
+        this.hoverEdit = true;
+    }
+
+    $scope.hoverOut = function() {
+        this.hoverEdit = false;
+    }
 
     $scope.go_to_quiz = function(level) {
         var sending_data = {
