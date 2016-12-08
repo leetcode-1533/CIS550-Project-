@@ -38,7 +38,7 @@ app.controller('leaderboarCtrl', ['$scope', '$http', function($scope, $http){
 
 
 app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', function($scope, $http, $timeout, myService){
-    var total_question = 2; //
+    var total_question = 1; //
 
     var recieved_data = myService.get();
     
@@ -299,9 +299,18 @@ app.controller('resultCtrl',['$scope', '$http', 'myService', function($scope, $h
     $scope.hints_given = all_data.hints_given;
 	$scope.hints_used = $scope.hints_given - $scope.hints_remaining;
 
-    // angular.forEach(all_data.correct_answers, function(value, key) {
-    //     console.log(value);
-    // });
+    $scope.abstr_url = [];
+    // console.log(all_data.questions);
+    for (var i = 0; i < all_data.questions.length; i++) {
+        // console.log(all_data.questions[i]["correct_answer"]);
+        $scope.abstr_url.push({
+            key: all_data.questions[i]["correct_answer"],
+            value: all_data.questions[i]["correct_answer"]
+        });
+        // console.log("test");
+    }
+
+    console.log($scope.abstr_url);
 
     if(all_data!=null && all_data.length!=0){
         if(all_data.username!="" && all_data.username!="Anonymous" && all_data.level!="Practice Mode"){
