@@ -25,6 +25,15 @@ app.controller('leaderboarCtrl', ['$scope', '$http', function($scope, $http){
     $scope.toggle_array[1] = false;
     $scope.toggle_array[2] = false;
     $scope.toggle_array[3] = false;
+
+    $scope.showPopover = function() {
+        $scope.popoverIsVisible = true;
+    }
+
+    $scope.hidePopover = function() {
+        $scope.popoverIsVisible = false;
+    }
+
     $scope.toggle = function(tab_no) {
         for(var i=0;i<4;i++) {
             if (i == tab_no) {
@@ -38,7 +47,7 @@ app.controller('leaderboarCtrl', ['$scope', '$http', function($scope, $http){
 
 
 app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', function($scope, $http, $timeout, myService){
-    var total_question = 2; //
+    var total_question = 10; //
 
     var recieved_data = myService.get();
     
