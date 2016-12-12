@@ -76,7 +76,7 @@ var ddg = require('ddg');
 
 // Remove str2 from str1
 var removestr2 = function(str1, str2) {
-    return str1.replace(new RegExp(str2, 'g'), " ").trim();
+    return str1.replace(new RegExp(str2, 'ig'), " ").trim();
 }
 
 router.get('/ddg_abstract_url', function(req, res, next) {
@@ -86,16 +86,20 @@ router.get('/ddg_abstract_url', function(req, res, next) {
 });
 
 router.get('/ddg_hint', function(req, res, next) {
+    // console.log(req.query["correct_answer"]);
    ddg.query(req.query["correct_answer"], function(err, data) {
        results = data.RelatedTopics; //related topics is a list of 'related answers'
+        console.log(results);
 
        var text;
        if (data.AbstractText) {
            text = data.AbstractText;
-       } else {
+       } else if (results[0] != null && results[0].text != ""){
            text = results[0].Text;
+       } else {
+           text = "";
        }
-
+        console.log(text);
        res.send(removestr2(text, req.query["correct_answer"]));
    });
 });
