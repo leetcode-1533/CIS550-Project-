@@ -25,7 +25,6 @@ app.controller('leaderboarCtrl', ['$scope', '$http', function($scope, $http){
     $scope.toggle_array[1] = false;
     $scope.toggle_array[2] = false;
     $scope.toggle_array[3] = false;
-
     $scope.toggle = function(tab_no) {
         for(var i=0;i<4;i++) {
             if (i == tab_no) {
@@ -39,7 +38,6 @@ app.controller('leaderboarCtrl', ['$scope', '$http', function($scope, $http){
 
 
 app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', function($scope, $http, $timeout, myService){
-    var total_question = 2; //
 
     var recieved_data = myService.get();
     
@@ -81,8 +79,8 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
     // random_number(question_indices);
 
     function get_question_ids(){
-        if(recieved_data.level == 'rapid_fire') var no_of_questions = 20;
-        else var no_of_questions = total_question;
+        if(recieved_data.level == 'rapid_fire') var no_of_questions = 100;
+        else var no_of_questions = 10;
         $http({
             url: '/quiz_list',
             method: 'GET',
@@ -124,7 +122,7 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
         $scope.question_limit = 99999;
     }
     else {
-        $scope.question_limit = total_question - 1;
+        $scope.question_limit = 9;
     }
 
     if(recieved_data.level == 'rapid_fire'){
@@ -139,10 +137,12 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
                 $scope.submit_results_rapid();
             }
         }
-        var timer = $timeout($scope.onTimeout, 1000);
+        
     }
     $scope.loading = true;
     $scope.show_hint = false;
+
+    $scope.show_plus_five = 0;
 
     $scope.get_next_question = function() {
 
@@ -151,17 +151,29 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
 
 
         // console.log($scope.user_answer);
-    	if ($scope.user_answer.correct == true) {
-	    	$scope.questions[$scope.question]['user_answer'] = true;
-	    	$scope.correct_answers = $scope.correct_answers + 1;
-            if(recieved_data.level == "rapid_fire"){
-                $scope.counter = $scope.counter + 5;
-            }			
-    		if($scope.questions[$scope.question]['hint_taken'] == false) {
-    			$scope.score = $scope.score + 10;
-    		}
-    		else $scope.score = $scope.score + 5;
-    	}
+    	if($scope.question != -1){
+            if ($scope.user_answer.correct == true) {
+                $scope.questions[$scope.question]['user_answer'] = true;
+                $scope.correct_answers = $scope.correct_answers + 1;
+                if(recieved_data.level == "rapid_fire"){
+                    $scope.counter = $scope.counter + 5;
+                        $scope.show_plus_five = 2;
+                    var plus = $timeout(function(){
+                        $scope.show_plus_five = 1;
+                    }, 2000)
+                }           
+                if($scope.questions[$scope.question]['hint_taken'] == false) {
+                    $scope.score = $scope.score + 10;
+                }
+                else $scope.score = $scope.score + 5;
+            }
+            else {
+                if(recieved_data.level == 'rapid_fire'){
+                    $scope.show_plus_five = 1;
+                }
+            }
+        }
+        
     	// console.log($scope.score);
     	// console.log($scope.correct_answers);
     	// console.log($scope.questions[$scope.question]);
@@ -177,12 +189,16 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
 	    .success(function (data) {
 	        console.log(data);
             $scope.loading = false;
-	        temp_question[$scope.question] =
+
+            if($scope.question==0 && recieved_data.level == 'rapid_fire'){
+                var timer = $timeout($scope.onTimeout, 1000);
+            }
+
+	        temp_question[$scope.question] = 
 	            {"question": data['question'], 
 	            "correct_answer": data['answer'][0]['answer'], 
 	            "hint_taken": false, 
 	            "user_answer": false,
-                "correct_ans_url": data['correct_ans_url'],
 	            "options": [
 	                {"answerText":data['answer'][0]['answer'], "correct": true, "disabled": false},
 	                {"answerText":data['answer'][1]['options'], "correct": false, "disabled": false},
@@ -207,7 +223,7 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
     }
     var temp = $timeout(function(){
         $scope.get_next_question();        
-    }, 1000);
+    }, 2000);
 
     // $scope.get_hint = function() {
     //     if($scope.hints_remaining > 0){
@@ -228,6 +244,19 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
     // }
     $scope.get_hint = function() {
     	if($scope.hints_remaining > 0){
+
+            var count = 0;
+            answers = $scope.questions[$scope.question]['options'];
+            for(var i=0;i<answers.length;i++){
+                if(answers[i].correct == false && count < 2) {
+                    answers[i].disabled = true;
+                    count = count + 1;
+                    // console.log(count);
+                }
+                // console.log($scope.questions[$scope.question]);
+            }
+
+
 	    	$scope.questions[$scope.question]['hint_taken'] = true;
 	    	$scope.hints_remaining = $scope.hints_remaining - 1;
             $scope.show_hint = true;
@@ -257,7 +286,6 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
     		}
     		else $scope.score = $scope.score + 5;
     	}
-    	console.log($scope.questions);
     	// console.log($scope.score);
     	// console.log($scope.correct_answers);
     	// console.log($scope.questions[$scope.question]);
@@ -269,7 +297,7 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
     		"hints_remaining": $scope.hints_remaining,
             "hints_given": $scope.hints_given,
             "username": $scope.username,
-            "level": $scope.level_display,
+            "level": $scope.level_display 
     	}
         console.log(sending_data);
     	myService.set(sending_data);
@@ -301,10 +329,6 @@ app.controller('resultCtrl',['$scope', '$http', 'myService', function($scope, $h
     $scope.hints_given = all_data.hints_given;
 	$scope.hints_used = $scope.hints_given - $scope.hints_remaining;
 
-    // angular.forEach(all_data.correct_answers, function(value, key) {
-    //     console.log(value);
-    // });
-
     if(all_data!=null && all_data.length!=0){
         if(all_data.username!="" && all_data.username!="Anonymous" && all_data.level!="Practice Mode"){
             console.log("here")
@@ -322,14 +346,7 @@ app.controller('resultCtrl',['$scope', '$http', 'myService', function($scope, $h
     if(all_data.username!=null && all_data.username!="" && angular.isDefined(all_data.username) && all_data.username!="Anonymous")
         $scope.username = all_data.username;
     else $scope.username = "";
-
-    $scope.hoverIn = function() {
-        this.hoverEdit = true;
-    }
-
-    $scope.hoverOut = function() {
-        this.hoverEdit = false;
-    }
+    // console.log(all_data);
 
     $scope.go_to_quiz = function(level) {
         var sending_data = {
