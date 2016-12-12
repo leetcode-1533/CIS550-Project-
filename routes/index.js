@@ -87,21 +87,27 @@ router.get('/ddg_abstract_url', function(req, res, next) {
 
 router.get('/ddg_hint', function(req, res, next) {
     // console.log(req.query["correct_answer"]);
-   ddg.query(req.query["correct_answer"], function(err, data) {
-       results = data.RelatedTopics; //related topics is a list of 'related answers'
-        console.log(results);
+    if (!isNaN(req.query["correct_answer"])) {
+        res.status(404).send("");
+     return;
+    } else {
+        ddg.query(req.query["correct_answer"], function(err, data) {
+            results = data.RelatedTopics; //related topics is a list of 'related answers'
+            console.log(results);
 
-       var text;
-       if (data.AbstractText) {
-           text = data.AbstractText;
-       } else if (results[0] != null && results[0].text != ""){
-           text = results[0].Text;
-       } else {
-           text = "";
-       }
-        console.log(text);
-       res.send(removestr2(text, req.query["correct_answer"]));
-   });
+            var text;
+            if (data.AbstractText) {
+                text = data.AbstractText;
+            } else if (results[0] != null && results[0].text != ""){
+                text = results[0].Text;
+            } else {
+                res.status(404).send("");
+                return;
+            }
+            text = removestr2(text, req.query["correct_answer"]);
+            res.send(text);
+        });
+    }
 });
 
 router.get('/quiz_list', function(req, res, next) {

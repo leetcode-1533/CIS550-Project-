@@ -251,9 +251,7 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
                 if(answers[i].correct == false && count < 2) {
                     answers[i].disabled = true;
                     count = count + 1;
-                    // console.log(count);
                 }
-                // console.log($scope.questions[$scope.question]);
             }
 
 
@@ -266,10 +264,11 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
                 url: '/ddg_hint',
                 method: "GET",
                 params: {correct_answer: $scope.questions[$scope.question]["correct_answer"]}
-            }).success(function(data) {
+            }).success(function(data, status) {
                 // console.log($scope.questions[$scope.question]["correct_answer"]);
                 // console.log();
                 $scope.current_hint = data;
+                console.log(status);
             });
 	    }
     }
