@@ -15,6 +15,7 @@ var MongoClinet = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 var url = 'mongodb://kirasev:Kirasev101@ds159237.mlab.com:59237/sqlympics';
 var Quiz = mongoose.model('Quiz');
+var mongo_question = "questions";
 
 var leaderboard = mongoose.model('leaderboard');
 
@@ -93,7 +94,7 @@ router.get('/ddg_hint', function(req, res, next) {
     } else {
         ddg.query(req.query["correct_answer"], function(err, data) {
             results = data.RelatedTopics; //related topics is a list of 'related answers'
-            console.log(results);
+            // console.log(results);
 
             var text;
             if (data.AbstractText) {
@@ -115,7 +116,7 @@ router.get('/quiz_list', function(req, res, next) {
     if (err) throw err;
 
     // console.log(req.query['total_questions']);
-    var questions = db.collection('questions');
+    var questions = db.collection(mongo_question);
     questions.aggregate([ { $sample: { size: parseInt(req.query['total_questions'])} }, {$project:{_id: 1}}]).toArray(function (err, docs) {
           // console.log(docs);
         res.json(docs);
@@ -132,20 +133,35 @@ router.get('/test_http', function(req, res, next) {
   flowController.on('dowork', function(obj) {
     connection.query(obj["questionquery"], function (err, row) {
       connection.query(obj['options'], function (err, options) {
-          ddg.query(row[0]["answer"], function(err, ddg_data) {
-              // console.log(ddg_data);
-              if (err) console.log(err);
-              console.log(obj['question']);
-              res.json({"question":obj['question'],
+          if (err) console.log(err);
+
+          var name = row[0]["answer"]
+          var name_array = String(name).split(' ');
+          var image_url = "";
+
+          // if (name_array.length == 2) {
+          //     var first_name = name_array[0];
+          //     var last_name = name_array[1];
+          // }
+          connection.query("SELECT 'image' FROM 'Athlete' WHERE 'first_name'= ? AND 'last_name' = ?", name_array, function(error, result) {
+            if (error) {
+                image_url = "";
+            } else {
+                image_url = result;
+            }
+
+            res.json({"question":obj['question'],
                   "answer":[row[0], options[0],options[1],options[2]],
-                  "correct_ans_url": ddg_data.AbstractURL});
+                  "image_url": image_url});
           });
+
+
       });
     });
   });
 
   MongoClinet.connect(url, function(err, db) {
-    var questions = db.collection('questions');
+    var questions = db.collection(mongo_question);
       console.log(req.query);
     questions.findOne({_id: ObjectId(req.query.question_id)}, function(err, obj) {
         if(err) {
@@ -183,7 +199,7 @@ router.get('/newquestion/validateRightSql', function(req, res){
 
 router.post('/newquestion/addquiz', function(req, res, next) {
     MongoClinet.connect(url, function(err, db) {
-        db.collection("questions").insertOne(req.body, function(err, result) {
+        db.collection(mongo_question).insertOne(req.body, function(err, result) {
             // console.log(err);
             db.close();
         });
