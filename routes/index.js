@@ -15,7 +15,7 @@ var MongoClinet = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 var url = 'mongodb://kirasev:Kirasev101@ds159237.mlab.com:59237/sqlympics';
 var Quiz = mongoose.model('Quiz');
-var mongo_question = "questions";
+var mongo_question = "testdb";
 
 var leaderboard = mongoose.model('leaderboard');
 
@@ -143,10 +143,11 @@ router.get('/test_http', function(req, res, next) {
           //     var first_name = name_array[0];
           //     var last_name = name_array[1];
           // }
-          connection.query("SELECT 'image' FROM 'Athlete' WHERE 'first_name'= ? AND 'last_name' = ?", name_array, function(error, result) {
+          connection.query("SELECT image FROM Athlete WHERE first_name = ? AND last_name = ?", name_array, function(error, result) {
             if (error) {
                 image_url = "";
             } else {
+                console.log(result[0]["image"]);
                 image_url = result;
             }
 
