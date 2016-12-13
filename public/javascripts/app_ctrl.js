@@ -358,6 +358,15 @@ app.controller('resultCtrl',['$scope', '$http', 'myService', function($scope, $h
         myService.set(sending_data);
         window.location = '/#/quiz';
     }
+
+    $scope.hoverIn = function() {
+        this.hoverEdit = true;
+    }
+
+    $scope.hoverOut = function() {
+        this.hoverEdit = false;
+    }
+
 }]);
 
 app.factory('myService', function(){
