@@ -40,7 +40,8 @@ app.controller('leaderboarCtrl', ['$scope', '$http', function($scope, $http){
 app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', function($scope, $http, $timeout, myService){
 
     var recieved_data = myService.get();
-    
+    var no_of_questions = 10;
+
     if(angular.isDefined(recieved_data.username)) {
         $scope.username = recieved_data.username;
     }
@@ -71,7 +72,7 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
         $scope.level_display = "Practice Mode";
     }
 
- 	var no_of_questions = 20;
+ 	// var no_of_questions = 20;
     // var question_indices = [];
     // for(var i=0; i<no_of_questions; i++){
     // 	question_indices.push(i);
@@ -79,8 +80,8 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
     // random_number(question_indices);
 
     function get_question_ids(){
-        if(recieved_data.level == 'rapid_fire') var no_of_questions = 100;
-        else var no_of_questions = 10;
+        if(recieved_data.level == 'rapid_fire')  no_of_questions = 100;
+        else no_of_questions = 2;
         $http({
             url: '/quiz_list',
             method: 'GET',
@@ -122,7 +123,7 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
         $scope.question_limit = 99999;
     }
     else {
-        $scope.question_limit = 9;
+        $scope.question_limit = no_of_questions - 1;
     }
 
     if(recieved_data.level == 'rapid_fire'){
@@ -193,6 +194,7 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
             if($scope.question==0 && recieved_data.level == 'rapid_fire'){
                 var timer = $timeout($scope.onTimeout, 1000);
             }
+            $scope.related_image = data['image_url'];
 
 	        temp_question[$scope.question] = 
 	            {"question": data['question'], 
@@ -314,7 +316,8 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
             "hints_remaining": $scope.hints_remaining,
             "hints_given": $scope.hints_given,
             "username": $scope.username,
-            "level": $scope.level_display 
+            "level": $scope.level_display,
+            "related_image": $scope.related_image
         }
         myService.set(sending_data);
         window.location = '/#/result';
@@ -330,6 +333,7 @@ app.controller('resultCtrl',['$scope', '$http', 'myService', function($scope, $h
 	$scope.hints_remaining = all_data.hints_remaining;
     $scope.hints_given = all_data.hints_given;
 	$scope.hints_used = $scope.hints_given - $scope.hints_remaining;
+    $scope.related_image = all_data.related_image;
 
     if(all_data!=null && all_data.length!=0){
         if(all_data.username!="" && all_data.username!="Anonymous" && all_data.level!="Practice Mode"){
