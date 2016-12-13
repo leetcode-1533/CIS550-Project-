@@ -244,19 +244,33 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
     // }
     $scope.get_hint = function() {
     	if($scope.hints_remaining > 0){
+
+
 	    	$scope.questions[$scope.question]['hint_taken'] = true;
 	    	$scope.hints_remaining = $scope.hints_remaining - 1;
-            $scope.show_hint = true;
             $scope.current_hint = "";
+
 
             $http({
                 url: '/ddg_hint',
                 method: "GET",
                 params: {correct_answer: $scope.questions[$scope.question]["correct_answer"]}
-            }).success(function(data) {
+            }).success(function(data, status) {
                 // console.log($scope.questions[$scope.question]["correct_answer"]);
                 // console.log();
                 $scope.current_hint = data;
+                $scope.show_hint = true;
+                // console.log(status);
+            }).error(function(data, status) {
+                // cannot find in the database
+                var count = 0;
+                answers = $scope.questions[$scope.question]['options'];
+                for(var i=0;i<answers.length;i++){
+                    if(answers[i].correct == false && count < 2) {
+                        answers[i].disabled = true;
+                        count = count + 1;
+                    }
+                }
             });
 	    }
     }
