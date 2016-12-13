@@ -72,26 +72,42 @@ router.get('/update_leaders', function(req, res) {
   });
 })
 
-    var ddg = require('ddg');
+var ddg = require('ddg');
 
 // Remove str2 from str1
 var removestr2 = function(str1, str2) {
-    return str1.replace(new RegExp(str2, 'g'), " ").trim();
+    return str1.replace(new RegExp(str2, 'ig'), " ").trim();
 }
 
+router.get('/ddg_abstract_url', function(req, res, next) {
+    ddg.query("beijing", function(err, data) {
+        res.send(data.AbstractURL);
+    })
+});
+
 router.get('/ddg_hint', function(req, res, next) {
-   ddg.query(req.query["correct_answer"], function(err, data) {
-       results = data.RelatedTopics; //related topics is a list of 'related answers'
+    // console.log(req.query["correct_answer"]);
+    if (!isNaN(req.query["correct_answer"])) {
+        res.status(404).send("");
+     return;
+    } else {
+        ddg.query(req.query["correct_answer"], function(err, data) {
+            results = data.RelatedTopics; //related topics is a list of 'related answers'
+            console.log(results);
 
-       var text;
-       if (data.AbstractText) {
-           text = data.AbstractText;
-       } else {
-           text = results[0].Text;
-       }
-
-       res.send(removestr2(text, req.query["correct_answer"]));
-   });
+            var text;
+            if (data.AbstractText) {
+                text = data.AbstractText;
+            } else if (results[0] != null && results[0].text != ""){
+                text = results[0].Text;
+            } else {
+                res.status(404).send("");
+                return;
+            }
+            text = removestr2(text, req.query["correct_answer"]);
+            res.send(text);
+        });
+    }
 });
 
 router.get('/quiz_list', function(req, res, next) {
@@ -116,10 +132,14 @@ router.get('/test_http', function(req, res, next) {
   flowController.on('dowork', function(obj) {
     connection.query(obj["questionquery"], function (err, row) {
       connection.query(obj['options'], function (err, options) {
-        if (err) console.log(err);
-        console.log(obj['question']);
-        res.json({"question":obj['question'],
-          "answer":[row[0], options[0],options[1],options[2]]});
+          ddg.query(row[0]["answer"], function(err, ddg_data) {
+              // console.log(ddg_data);
+              if (err) console.log(err);
+              console.log(obj['question']);
+              res.json({"question":obj['question'],
+                  "answer":[row[0], options[0],options[1],options[2]],
+                  "correct_ans_url": ddg_data.AbstractURL});
+          });
       });
     });
   });
