@@ -262,6 +262,7 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
                 $scope.show_hint = true;
                 // console.log(status);
             }).error(function(data, status) {
+                $scope.user_answer = "";
                 // cannot find in the database
                 var count = 0;
                 answers = $scope.questions[$scope.question]['options'];
