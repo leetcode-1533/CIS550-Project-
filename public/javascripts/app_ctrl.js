@@ -357,7 +357,7 @@ app.controller('resultCtrl',['$scope', '$http', 'myService', function($scope, $h
 
     $scope.hoverIn = function() {
         console.log(this.question.related_image);
-        if (this.question.related_image != "" && this.question.related_image != "None") {
+        if (this.question.related_image != null && this.question.related_image != "") {
             this.hoverEdit = true;
         }
     }
