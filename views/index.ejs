@@ -24,11 +24,6 @@
 			    	</ul>
 			  	</div>
 			</nav>
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="/#/home">Olympics Quiz</a>
-				</div>
-			</div>
 		</nav>
 		<!--<hovercard hover-tmpl-url="{{trustSrcurl(https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_120x44dp.png}}">Hover over here</hovercard>-->
 		<!--{{scores}}-->
@@ -235,7 +230,6 @@
 					<ul class="nav navbar-nav">
 						<li class="active"><a href="/#/newquestion">New Question</a></li>
 						<li><a href="/#/ngtable">Test Query</a></li>
-
 					</ul>
 				</div>
 			</nav>
@@ -332,7 +326,6 @@
 					<ul class="nav navbar-nav">
 						<li><a href="/#/newquestion">New Question</a></li>
 						<li class="active"><a href="/#/ngtable">Test Query</a></li>
-
 					</ul>
 				</div>
 			</nav>
@@ -409,7 +402,6 @@
 			    	</ul>
 			  	</div>
 			</nav>
-			{{abstr_url}}
 			<div class="container" style="margin-left: 15%; margin-right: 15%; margin-top: 5%; width: 70%">
 			  	<div ng-show="questions!=null && questions.length!=0">
 				  	<h3 style="text-align: center">You got {{correct_answers}}/{{questions.length}} correct!</h3>
@@ -428,14 +420,12 @@
 				        		<td class="col-md-1">{{$index+1}}.</td>
 				        		<td class="col-md-8">{{question.question}}</td>
 				        		<td class="col-md-3" ng-class="question.user_answer==true?'btn-success':'btn-danger'">
-<<<<<<< HEAD
-									<div position:absolute z-index:100 ng-show="hoverEdit">
-										<div position:absolute><img object-fit: contain;  width="200" height="40" src="{{question.related_image}}"></div>
+									<div style="position:relative; z-index:100" ng-show="hoverEdit">
+										<div style="position: absolute; background-color: gray; top: 28px; width: 200px; height: 300px; border-radius: 10px">
+											<img style="object-fit: contain; width: 200px; height: 300px" src="{{question.related_image}}">
+										</div>
 									</div>
-									({{question.correct_option | numberToAlphabet}}.) <a href="https://google.com/search?&q={{question.correct_answer}}" target="_blank">{{question.correct_answer}}</a>
-=======
-				        			({{question.correct_option | numberToAlphabet}}.) <a href={{abstr_url[question.correct_answer]}}>{{question.correct_answer}}</a>
->>>>>>> 53da98a17436a197d1e34cefd61b66c459856d59
+				        			({{question.correct_option | numberToAlphabet}}.) <a href="https://google.com/search?&q={{question.correct_answer}}" target="_blank" style="color: white">{{question.correct_answer}}</a>
 					        		<span ng-if="question.hint_taken==true && question.user_answer==true">(+5)</span>
 					        		<span ng-if="question.hint_taken==true && question.user_answer==false">(0)</span>
 					        		<span ng-if="question.hint_taken==false && question.user_answer==true">(+10)</span>
@@ -449,6 +439,12 @@
 			  		<h3 style="text-align: center">No results to show. You can take the quiz again from below.</h3>
 			  	</div>
 			  	<div class="row" style="margin-top: 5%">
+			  		<div class="row" style="text-align: center; margin-top: 5%; margin-bottom: 40px">
+				  		<form action="/#/leaderboard">
+						    <input type="submit" class="btn btn-primary" value="Leaderboard" />
+						</form>
+				  	</div>
+
 			  		<h3 style="text-align: center">Try again</h3>
 			  		<div class="form-group">
 					  	<label for="usr">Username:</label>
@@ -472,12 +468,6 @@
 						</div>
 					</div>
 			  		</div>
-
-			  		<div class="row" style="text-align: center; margin-top: 5%; margin-bottom: 20px">
-				  		<form action="/#/leaderboard">
-						    <input type="submit" class="btn btn-primary" value="Leaderboard" />
-						</form>
-				  	</div>
 			  </div>
 			</div>
 		</script>
