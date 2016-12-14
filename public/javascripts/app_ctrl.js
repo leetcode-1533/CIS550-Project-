@@ -81,7 +81,7 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
 
     function get_question_ids(){
         if(recieved_data.level == 'rapid_fire')  no_of_questions = 100;
-        else no_of_questions = 2;
+        // else no_of_questions = 2;
         $http({
             url: '/quiz_list',
             method: 'GET',
@@ -194,13 +194,13 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
             if($scope.question==0 && recieved_data.level == 'rapid_fire'){
                 var timer = $timeout($scope.onTimeout, 1000);
             }
-            $scope.related_image = data['image_url'];
 
 	        temp_question[$scope.question] = 
 	            {"question": data['question'], 
 	            "correct_answer": data['answer'][0]['answer'], 
 	            "hint_taken": false, 
 	            "user_answer": false,
+                "related_image": data['image_url'],
 	            "options": [
 	                {"answerText":data['answer'][0]['answer'], "correct": true, "disabled": false},
 	                {"answerText":data['answer'][1]['options'], "correct": false, "disabled": false},
@@ -301,24 +301,15 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
     		"hints_remaining": $scope.hints_remaining,
             "hints_given": $scope.hints_given,
             "username": $scope.username,
-            "level": $scope.level_display 
-    	}
+            "level": $scope.level_display,
+        }
         console.log(sending_data);
     	myService.set(sending_data);
     	window.location = '/#/result';
     }
 
     $scope.submit_results_rapid = function(){
-        var sending_data = {
-            "questions": $scope.questions,
-            "correct_answers": $scope.correct_answers,
-            "score": $scope.score,
-            "hints_remaining": $scope.hints_remaining,
-            "hints_given": $scope.hints_given,
-            "username": $scope.username,
-            "level": $scope.level_display,
-            "related_image": $scope.related_image
-        }
+        // console.log($scope.related_image);
         myService.set(sending_data);
         window.location = '/#/result';
     }
@@ -333,7 +324,8 @@ app.controller('resultCtrl',['$scope', '$http', 'myService', function($scope, $h
 	$scope.hints_remaining = all_data.hints_remaining;
     $scope.hints_given = all_data.hints_given;
 	$scope.hints_used = $scope.hints_given - $scope.hints_remaining;
-    $scope.related_image = all_data.related_image;
+
+    console.log($scope.questions);
 
     if(all_data!=null && all_data.length!=0){
         if(all_data.username!="" && all_data.username!="Anonymous" && all_data.level!="Practice Mode"){
@@ -364,7 +356,10 @@ app.controller('resultCtrl',['$scope', '$http', 'myService', function($scope, $h
     }
 
     $scope.hoverIn = function() {
-        this.hoverEdit = true;
+        console.log(this.question.related_image);
+        if (this.question.related_image != "" && this.question.related_image != "None") {
+            this.hoverEdit = true;
+        }
     }
 
     $scope.hoverOut = function() {

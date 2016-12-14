@@ -147,8 +147,10 @@ router.get('/test_http', function(req, res, next) {
             if (error) {
                 image_url = "";
             } else {
-                console.log(result[0]["image"]);
-                image_url = result;
+                if (result && result[0] && result[0]["image"] != "None") {
+                    console.log(result[0]["image"]);
+                    image_url = result[0]["image"];
+                }
             }
 
             res.json({"question":obj['question'],
