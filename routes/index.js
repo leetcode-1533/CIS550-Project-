@@ -61,7 +61,7 @@ router.get('/update_leaders', function(req, res) {
 
   leaderboard.collection.insertOne({
     user_id: req.query['username'],
-    score: req.query['score'],
+    score: parseInt(req.query['score']),
     mode: req.query['level']
   }, function(err, data) {
     if(err) {
