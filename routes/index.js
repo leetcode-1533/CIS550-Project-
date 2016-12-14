@@ -77,7 +77,11 @@ var ddg = require('ddg');
 
 // Remove str2 from str1
 var removestr2 = function(str1, str2) {
-    return str1.replace(new RegExp(str2, 'ig'), " ").trim();
+    var str_list = String(str2).split(" ");
+    for (var i = 0; i < str_list.length; i++) {
+        str1 = str1.replace(new RegExp(str_list[i], 'ig'), " ");
+    }
+    return str1.trim();
 }
 
 router.get('/ddg_abstract_url', function(req, res, next) {
