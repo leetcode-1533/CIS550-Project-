@@ -280,36 +280,44 @@ app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', func
 
 
     $scope.submit_results = function(){
-    	// console.log("here");
-    	// console.log($scope.user_answer);
-    	if ($scope.user_answer.correct == true) {
-	    	$scope.questions[$scope.question]['user_answer'] = true;
-	    	$scope.correct_answers = $scope.correct_answers + 1;			
-    		if($scope.questions[$scope.question]['hint_taken'] == false) {
-    			$scope.score = $scope.score + 10;
-    		}
-    		else $scope.score = $scope.score + 5;
-    	}
-    	// console.log($scope.score);
-    	// console.log($scope.correct_answers);
-    	// console.log($scope.questions[$scope.question]);
+        // console.log("here");
+        // console.log($scope.user_answer);
+        if ($scope.user_answer.correct == true) {
+            $scope.questions[$scope.question]['user_answer'] = true;
+            $scope.correct_answers = $scope.correct_answers + 1;
+            if($scope.questions[$scope.question]['hint_taken'] == false) {
+                $scope.score = $scope.score + 10;
+            }
+            else $scope.score = $scope.score + 5;
+        }
+        // console.log($scope.score);
+        // console.log($scope.correct_answers);
+        // console.log($scope.questions[$scope.question]);
 
-    	var sending_data = {
-    		"questions": $scope.questions,
-    		"correct_answers": $scope.correct_answers,
-    		"score": $scope.score,
-    		"hints_remaining": $scope.hints_remaining,
+        var sending_data = {
+            "questions": $scope.questions,
+            "correct_answers": $scope.correct_answers,
+            "score": $scope.score,
+            "hints_remaining": $scope.hints_remaining,
             "hints_given": $scope.hints_given,
             "username": $scope.username,
-            "level": $scope.level_display,
+            "level": $scope.level_display
         }
         console.log(sending_data);
-    	myService.set(sending_data);
-    	window.location = '/#/result';
+        myService.set(sending_data);
+        window.location = '/#/result';
     }
 
     $scope.submit_results_rapid = function(){
-        // console.log($scope.related_image);
+        var sending_data = {
+            "questions": $scope.questions,
+            "correct_answers": $scope.correct_answers,
+            "score": $scope.score,
+            "hints_remaining": $scope.hints_remaining,
+            "hints_given": $scope.hints_given,
+            "username": $scope.username,
+            "level": $scope.level_display
+        }
         myService.set(sending_data);
         window.location = '/#/result';
     }
