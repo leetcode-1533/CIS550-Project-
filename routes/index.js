@@ -15,9 +15,10 @@ var MongoClinet = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 var url = 'mongodb://kirasev:Kirasev101@ds159237.mlab.com:59237/sqlympics';
 var Quiz = mongoose.model('Quiz');
-var mongo_question = "testdb";
+var mongo_question = "Demo_questions";
 
 var leaderboard = mongoose.model('leaderboard');
+var number_of_leaderboard = 100;
 
 var mysql = require('mysql');
 
@@ -48,11 +49,22 @@ router.get('/get_leaders', function(req, res) {
                     }
                     // console.log({"Easy":Easy,"Medium":Medium,"Hard":Hard,"Rapid":Rapid});
                     res.json({"Easy": Easy, "Medium": Medium, "Hard": Hard, "Rapid": Rapid});
-                }).sort({"score": -1}).limit(10);
-            }).sort({"score": -1}).limit(10);
-        }).sort({"score": -1}).limit(10);
-    }).sort({"score": -1}).limit(10);
+                }).sort({"score": -1}).limit(number_of_leaderboard);
+            }).sort({"score": -1}).limit(number_of_leaderboard);
+        }).sort({"score": -1}).limit(number_of_leaderboard);
+    }).sort({"score": -1}).limit(number_of_leaderboard);
 })
+
+router.get('/question_count', function(req, res, next) {
+    MongoClinet.connect(url, function(err, db) {
+        if (err) throw err;
+
+        var Questions = db.collection(mongo_question);
+        Questions.find().count(function(err, count) {
+            res.json(count);
+        })
+    })
+});
 
 router.get('/update_leaders', function(req, res) {
   console.log(req.query['username'])
