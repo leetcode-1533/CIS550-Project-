@@ -38,7 +38,6 @@ app.controller('leaderboarCtrl', ['$scope', '$http', function($scope, $http){
 
 
 app.controller('questionsCtrl',['$scope', '$http', '$timeout', 'myService', function($scope, $http, $timeout, myService){
-
     var recieved_data = myService.get();
     var no_of_questions = 10;
 
@@ -333,7 +332,19 @@ app.controller('resultCtrl',['$scope', '$http', 'myService', function($scope, $h
     $scope.hints_given = all_data.hints_given;
 	$scope.hints_used = $scope.hints_given - $scope.hints_remaining;
 
-    console.log($scope.questions);
+    $scope.abstr_url = {};
+
+    for (var i = 0; all_data!=null && all_data.length!=0 && i < all_data.questions.length; i++) {
+        var current_answer = all_data.questions[i]["correct_answer"];
+        $http({
+            url: '/ddg_abstract_url',
+            method: "GET",
+            params: {correct_answer: current_answer}
+        }).success(function(data){
+            $scope.abstr_url[current_answer] = data;
+            // all_data.questions[i].abstr_url
+        });
+    };
 
     if(all_data!=null && all_data.length!=0){
         if(all_data.username!="" && all_data.username!="Anonymous" && all_data.level!="Practice Mode"){
