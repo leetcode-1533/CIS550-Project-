@@ -202,7 +202,7 @@
 							  <label><input type="radio" name="user_answer" ng-model="$parent.user_answer" ng-value="{{option}}" ng-disabled="option.disabled">({{$index | numberToAlphabet}}.) {{option.answerText}}</label>
 							</div> -->
 							<div class="btn-group" data-toggle="buttons" style="width: 100%">
-							  <label class="btn btn-default" style="width: 40%; margin: 2% 5% 2% 5%; border-radius: 10px; font-size: 13px" ng-repeat="option in questions[question].options" ng-class="{'btn-primary': user_answer.answerText == option.answerText, 'btn-danger': option.disabled==true}">
+							  <label class="btn btn-default" style="width: 40%; margin: 2% 5% 2% 5%; border-radius: 10px; font-size: 13px;  display:inline-block; white-space: nowrap; overflow:hidden !important; text-overflow: ellipsis;" ng-repeat="option in questions[question].options" ng-class="{'btn-primary': user_answer.answerText == option.answerText, 'btn-danger': option.disabled==true}">
 							  <input type="radio" name="user_answer" ng-model="$parent.user_answer" ng-value="{{option}}" ng-disabled="option.disabled" autocomplete="off">({{$index | numberToAlphabet}}.) {{option.answerText}}</label>
 							</div>
 				        </div>
