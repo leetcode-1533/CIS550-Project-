@@ -13,7 +13,8 @@ require('../models/leaderboard');
 
 var MongoClinet = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
-var url = 'mongodb://kirasev:Kirasev101@ds159237.mlab.com:59237/sqlympics';
+var url = 'localhost:59237/sqlympics' // local mongodb address
+
 var Quiz = mongoose.model('Quiz');
 var mongo_question = "Demo_questions";
 
@@ -23,11 +24,11 @@ var number_of_leaderboard = 100;
 var mysql = require('mysql');
 
 var connection = mysql.createConnection({
-  host     : 'olympicquiz.cziypygdpbbb.us-west-2.rds.amazonaws.com',
-  user     : 'shahanimesh94',
-  password : 'shahanimesh94',
-  port     : '3306',
-  database : 'olympic_quiz'
+    host: 'localhost',
+    user     : 'username',
+    password : 'password',
+    port     : '3306',
+    database : 'olympic_quiz'
 });
 
 router.get('/get_leaders', function(req, res) {

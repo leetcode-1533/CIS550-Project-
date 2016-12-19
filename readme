@@ -1,0 +1,14 @@
+Hi
+
+This is our group CIS550 Project.
+
+To build your own:
+
+1. Mongodb specification:
+    change address at routes/index.js:
+    Required table:
+        var mongo_question = "Demo_questions"; with its own specification
+
+2. Mysql Specification:
+    change address at routes/index.js:
+    Its schema should will be run using sqls from mongodb
