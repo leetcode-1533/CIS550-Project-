@@ -1,0 +1,156 @@
+{ 
+    "_id" : ObjectId("5850752e5b8cce1304a38f77"), 
+    "question" : "In Which city did the olympics happen in the year 2008?", 
+    "questionquery" : "SELECT city AS answer FROM Olympics WHERE year=2008;", 
+    "options" : "SELECT DISTINCT city AS options FROM Olympics WHERE year <>2008 and city NOT LIKE (SELECT city AS answer FROM Olympics WHERE year=2008) ORDER BY RAND() LIMIT 3;"
+}
+{ 
+    "_id" : ObjectId("585075645b8cce1304a38f79"), 
+    "question" : "In Which city did the olympics happen in the year 2004?", 
+    "questionquery" : "SELECT city AS answer FROM Olympics WHERE year=2004;", 
+    "options" : "SELECT DISTINCT city AS options FROM Olympics WHERE year <>2004 and city NOT LIKE (SELECT city AS answer FROM Olympics WHERE year=2004) ORDER BY RAND() LIMIT 3;"
+}
+{ 
+    "_id" : ObjectId("585075955b8cce1304a38f7b"), 
+    "question" : "Which one of the following Athletes holds the current world record in pole vault(W)?", 
+    "questionquery" : "SELECT concat(A.first_name,' ',A.last_name) AS answer from Athlete A, records R where R.id=A.id and R.event_id=653", 
+    "options" : "SELECT DISTINCT concat(A.first_name,' ',A.last_name) AS options from Athlete A where A.id<>19251 and A.first_name NOT LIKE (SELECT A.first_name AS answer from Athlete A where A.id=19251) ORDER BY RAND() LIMIT 3"
+}
+{ 
+    "_id" : ObjectId("585075ab5b8cce1304a38f7d"), 
+    "question" : "Which one of the following Athletes holds the current world record in triple jump(W)?", 
+    "questionquery" : "SELECT concat(A.first_name,' ',A.last_name) AS answer from Athlete A, records R where R.id=A.id and R.event_id=609", 
+    "options" : "SELECT DISTINCT concat(A.first_name,' ',A.last_name) AS options from Athlete A where A.id<>19261 and A.first_name NOT LIKE (SELECT A.first_name AS answer from Athlete A where A.id=19261) ORDER BY RAND() LIMIT 3"
+}
+{ 
+    "_id" : ObjectId("585075d05b8cce1304a38f7f"), 
+    "question" : "In which year did Nadezhda Olizarenko break the world record for 800m?", 
+    "questionquery" : "SELECT R.Year AS answer from records R where R.event_id=342 and R.id=11539", 
+    "options" : "SELECT DISTINCT R.Year AS options from records R where R.event_id<>342 and R.Year NOT LIKE (SELECT R.Year AS answer from records R where R.event_id=342 and R.id=11539) ORDER BY RAND() LIMIT 3"
+}
+{ 
+    "_id" : ObjectId("585075ec5b8cce1304a38f81"), 
+    "question" : "In which year did Usain Bolt break the world record for 100m?", 
+    "questionquery" : "SELECT R.Year AS answer from records R where R.event_id=5 and R.id=20551", 
+    "options" : "SELECT DISTINCT R.Year AS options from records R where R.event_id<>5 and R.Year NOT LIKE (SELECT R.Year AS answer from records R where R.event_id=5 and R.id=20551) ORDER BY RAND() LIMIT 3"
+}
+{ 
+    "_id" : ObjectId("5850761f5b8cce1304a38f83"), 
+    "question" : "Florence Griffith-joyner holds the Olympic record in which of the following events?", 
+    "questionquery" : "SELECT S.event AS answer from Sport S where S.sport_id=382", 
+    "options" : "SELECT DISTINCT S.event AS options from Sport S where S.sport_id<>382 and S.event NOT LIKE (SELECT S.event AS answer from Sport S where S.sport_id=382) ORDER BY RAND() LIMIT 3"
+}
+{ 
+    "_id" : ObjectId("585076465b8cce1304a38f85"), 
+    "question" : "Which one of the following coutries have won atleast one medal in every olympics that has happened since 1896?", 
+    "questionquery" : "select distinct country_name AS answer from Country where code in (select country_id from won_in group by country_id  having count(year)=26) order by rand() limit 1;", 
+    "options" : "select distinct country_name AS options from Country where code in (select country_id from won_in group by country_id  having count(year)<26) order by rand() limit 3;"
+}
+{ 
+    "_id" : ObjectId("5850766b5b8cce1304a38f87"), 
+    "question" : "Which one of the following Countries didn't win even a single medal in the Year 2000?", 
+    "questionquery" : "select country_name as answer from Country WHERE CODE NOT IN (select country_id from won_in where year=2000) order by rand() limit 1", 
+    "options" : "select DISTINCT country_name as options from Country C, won_in W where W.country_id=C.code and W.year=2000 order by rand() limit 3"
+}
+{ 
+    "_id" : ObjectId("585076885b8cce1304a38f89"), 
+    "question" : "How many distinct countries won atleast a medal in 2008?", 
+    "questionquery" : "select count(country_id) as answer from won_in group by year having year=2008", 
+    "options" : "select DISTINCT count(country_id) as options from won_in group by year having year<>2008 and count(country_id)<>(select DISTINCT count(country_id) as answer from won_in group by year having year=2008) order by rand() limit 3"
+}
+{ 
+    "_id" : ObjectId("585076985b8cce1304a38f8b"), 
+    "question" : "In how may editions of olympics since 1896 does 100m appear?", 
+    "questionquery" : "select count(distinct olympic_year) as answer from winners WHERE sport_id=5 LIMIT 1", 
+    "options" : "select DISTINCT count(distinct olympic_year) as options from winners WHERE sport_id<>5 group by sport_id HAVING count(distinct olympic_year)<>(select count(distinct olympic_year) as answer from winners WHERE sport_id=5) order by rand() limit 3"
+}
+{ 
+    "_id" : ObjectId("585076c75b8cce1304a38f8d"), 
+    "question" : "How many different events were there in 2004 olympics?", 
+    "questionquery" : "select count(distinct sport_id) as answer from winners group by olympic_year having olympic_year=2004 limit 1", 
+    "options" : "select DISTINCT count(distinct sport_id) as options from winners group by olympic_year having olympic_year<>2004 and count(distinct sport_id)<>(select count(distinct sport_id) from winners group by olympic_year having olympic_year=2004)order by rand() limit 3"
+}
+{ 
+    "_id" : ObjectId("585076dd5b8cce1304a38f8f"), 
+    "question" : "Which one of the following events was not a part of 1992 olympics?", 
+    "questionquery" : "select concat(S.discipline,' - ',S.event) as answer from Sport S where S.sport_id not in(select sport_id from winners where olympic_year=1992) order by rand() limit 1", 
+    "options" : "select DISTINCT concat(S.discipline,' - ',S.event) as options from Sport S where S.sport_id in(select sport_id from winners where olympic_year=1992) order by rand() limit 3"
+}
+{ 
+    "_id" : ObjectId("58507aea5b8cce1304a38f93"), 
+    "question" : "When was Swimming-200m breaststroke introduced in olympics?", 
+    "questionquery" : "select distinct olympic_year as answer from winners where sport_id=158 order by olympic_year limit 1", 
+    "options" : "select distinct olympic_year as options from winners where sport_id<>158 and olympic_year<>(select distinct olympic_year from winners where sport_id=158 order by olympic_year limit 1) order by rand() limit 3;"
+}
+{ 
+    "_id" : ObjectId("58507b0c5b8cce1304a38f95"), 
+    "question" : "When is Usain bolt's birthday?", 
+    "questionquery" : "select dob as answer from Athlete where id= 20551 limit 1", 
+    "options" : "select DISTINCT dob as options from Athlete where id<>20551 and dob is not null order by rand() limit 3"
+}
+{ 
+    "_id" : ObjectId("58507b245b8cce1304a38f97"), 
+    "question" : "How old was Micheal phelps when they won their first olympic medal?", 
+    "questionquery" : "select min(olympic_year - year(dob)) as answer from Athlete A, winners W where A.id=W.athlete_id and A.id=18963", 
+    "options" : "select DISTINCT (olympic_year - year(dob)) as options from Athlete A, winners W where A.id=W.athlete_id and A.id<>18963 and A.dob is not null and (olympic_year - year(dob))>15 and (olympic_year - year(dob))<40 and (olympic_year - year(dob))<>(select min(olympic_year - year(dob)) as answer from Athlete A, winners W where A.id=W.athlete_id and A.id=18963) order by rand() limit 3"
+}
+{ 
+    "_id" : ObjectId("58507b585b8cce1304a38f99"), 
+    "question" : "Which country does Roger francois Ducret belong to?", 
+    "questionquery" : "select C.country_name as answer from Athlete A, belongs B, Country C where A.id=B.athlete_id and B.country_code=C.code and A.id=2507 limit 1", 
+    "options" : "select DISTINCT C.country_name as options from Country C where C.country_name not in (select C.country_name from Athlete A, belongs B, Country C where A.id=B.athlete_id and B.country_code=C.code and A.id =2507) order by rand() limit 3"
+}
+{ 
+    "_id" : ObjectId("58507be15b8cce1304a38f9b"), 
+    "question" : "Which country does Alfred Swahn belong to?", 
+    "questionquery" : "select C.country_name as answer from Athlete A, belongs B, Country C where A.id=B.athlete_id and B.country_code=C.code and A.id=1405 limit 1", 
+    "options" : "select DISTINCT C.country_name as options from Country C where C.country_name not in (select C.country_name from Athlete A, belongs B, Country C where A.id=B.athlete_id and B.country_code=C.code and A.id =1405) order by rand() limit 3"
+}
+{ 
+    "_id" : ObjectId("58507c155b8cce1304a38f9d"), 
+    "question" : "How many individuals have won an olympic medal from Bahamas?", 
+    "questionquery" : "select count(athlete_id) as answer from belongs group by country_code having country_code='BAH' limit 1", 
+    "options" : "select DISTINCT count(athlete_id) as options from belongs group by country_code having country_code<>'BAH' and count(athlete_id)<>(select count(athlete_id) as answer from belongs group by country_code having country_code='BAH') order by rand() limit 3;"
+}
+{ 
+    "_id" : ObjectId("58507d765b8cce1304a38f9f"), 
+    "question" : "How many individuals have won an olympic medal from Finland?", 
+    "questionquery" : "select count(athlete_id) as answer from belongs group by country_code having country_code='FIN' limit 1", 
+    "options" : "select DISTINCT count(athlete_id) as options from belongs group by country_code having country_code<>'FIN' and count(athlete_id)<>(select count(athlete_id) as answer from belongs group by country_code having country_code='FIN') order by rand() limit 3;"
+}
+{ 
+    "_id" : ObjectId("58507e855b8cce1304a38fa1"), 
+    "question" : "Which of these events is no longer played, as of 2008?", 
+    "questionquery" : "select distinct concat(S.discipline, ' - ', S.event) as answer from Sport S, winners W where W.sport_id=S.sport_id and S.sport_id not in(select sport_id from winners where olympic_year=2008) order by rand() limit 1;", 
+    "options" : "select distinct concat(S.discipline, ' - ', S.event) as options from Sport S, winners W where W.sport_id=S.sport_id and W.olympic_year=2008 order by rand() limit 3;"
+}
+{ 
+    "_id" : ObjectId("58507ea35b8cce1304a38fa3"), 
+    "question" : "Who among the following has won more than one medal at the Olympics?", 
+    "questionquery" : "select concat(A.first_name, ' ', A.last_name) as answer from Athlete A where A.id in (select athlete_id from winners group by athlete_id having count(*)>1) order by rand() limit 1;", 
+    "options" : "select concat(A.first_name, ' ', A.last_name) as options from Athlete A where A.id not in (select athlete_id from winners group by athlete_id having count(*)>1) order by rand() limit 3;"
+}
+{ 
+    "_id" : ObjectId("585080d55b8cce1304a38fcd"), 
+    "question" : "Who is possibly the greatest Olympian of all time?", 
+    "questionquery" : "select concat(first_name, ' ', last_name) as answer from Athlete where last_name='Phelps' and first_name='Michael';", 
+    "options" : "select concat(first_name, ' ', last_name) as options from Athlete where last_name<>'Phelps' and first_name<>'Michael' order by rand() limit 3;"
+}
+{ 
+    "_id" : ObjectId("585080f95b8cce1304a38fcf"), 
+    "question" : "Which of the following athlete won a gold medal on 2008 olympics?", 
+    "questionquery" : "select concat(A.first_name, ' ', A.last_name) as answer from Athlete A, winners W where A.id=W.athlete_id and W.olympic_year=2008 and W.medal='Gold' ORDER by rand() limit 1;", 
+    "options" : "select distinct concat(A.first_name, ' ', A.last_name) as options from Athlete A, winners W where A.id=W.athlete_id and W.olympic_year<2000 order by rand() limit 3;"
+}
+{ 
+    "_id" : ObjectId("58515f8738b1e19810f5223c"), 
+    "options" : "select count(distinct sport_id) as options from winners group by olympic_year having olympic_year<>1996 and count(distinct sport_id)<>(select count(distinct sport_id) from winners group by olympic_year having olympic_year=1996)order by rand() limit 3", 
+    "question" : "How many different events were there in 1996 olympics?", 
+    "questionquery" : "select count(distinct sport_id) as answer from winners group by olympic_year having olympic_year=1996 limit 1"
+}
+{ 
+    "_id" : ObjectId("585174249dd8a99dd3020dcd"), 
+    "options" : "select count(distinct sport_id) as options from winners group by olympic_year having olympic_year<>1996 and count(distinct sport_id)<>(select count(distinct sport_id) from winners group by olympic_year having olympic_year=1996)order by rand() limit 3", 
+    "question" : "How many different events were there in 1996 olympics?", 
+    "questionquery" : "select count(distinct sport_id) as answer from winners group by olympic_year having olympic_year=1996 limit 1"
+}

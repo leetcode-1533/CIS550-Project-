@@ -1,0 +1,60 @@
+{ 
+    "_id" : ObjectId("58507f9c5b8cce1304a38fbd"), 
+    "question" : "Who is possibly the greatest Olympian of all time?", 
+    "questionquery" : "select concat(first_name, ' ', last_name) as answer from Athlete where last_name='Federer' and first_name='Roger';", 
+    "options" : "select concat(first_name, ' ', last_name) as options from Athlete where last_name<>'Phelps' and first_name<>'Michael' order by rand() limit 3;"
+}
+{ 
+    "_id" : ObjectId("58507fc95b8cce1304a38fcb"), 
+    "question" : "Who is possibly the greatest Olympian of all time?", 
+    "questionquery" : "select concat(first_name, ' ', last_name) as answer from Athlete where last_name='Phelps' and first_name='Michael';", 
+    "options" : "select concat(first_name, ' ', last_name) as options from Athlete where last_name<>'Phelps' and first_name<>'Michael' order by rand() limit 3;"
+}
+{ 
+    "_id" : ObjectId("58508d735b8cce1304a38fd1"), 
+    "question" : "Florence Griffith-joyner holds the Olympic record in which of the following events?", 
+    "questionquery" : "SELECT S.event AS answer from Sport S where S.sport_id=382", 
+    "options" : "SELECT DISTINCT S.event AS options from Sport S where S.sport_id<>382 and S.event NOT LIKE (SELECT S.event AS answer from Sport S where S.sport_id=382) ORDER BY RAND() LIMIT 3"
+}
+{ 
+    "_id" : ObjectId("58508d7a5b8cce1304a38fd3"), 
+    "question" : "Florence Griffith-joyner holds the Olympic record in which of the following events?", 
+    "questionquery" : "SELECT S.event AS answer from Sport S where S.sport_id=382", 
+    "options" : "SELECT DISTINCT S.event AS options from Sport S where S.sport_id<>382 and S.event NOT LIKE (SELECT S.event AS answer from Sport S where S.sport_id=382) ORDER BY RAND() LIMIT 3"
+}
+{ 
+    "_id" : ObjectId("58508d8b5b8cce1304a38fd5"), 
+    "question" : "Florence Griffith-joyner holds the Olympic record in which of the following events?", 
+    "questionquery" : "SELECT S.event AS answer from Sport S where S.sport_id=382", 
+    "options" : "SELECT DISTINCT S.event AS options from Sport S where S.sport_id<>382 and S.event NOT LIKE (SELECT S.event AS answer from Sport S where S.sport_id=382) ORDER BY RAND() LIMIT 3"
+}
+{ 
+    "_id" : ObjectId("58508e305b8cce1304a38fd7"), 
+    "question" : "Which of the following athlete won a gold medal on 2008 olympics?", 
+    "questionquery" : "select concat(A.first_name, ' ', A.last_name) as answer from Athlete A, winners W where A.id=W.athlete_id and W.olympic_year=2008 and W.medal='Gold' ORDER by rand() limit 1;", 
+    "options" : "select distinct concat(A.first_name, ' ', A.last_name) as options from Athlete A, winners W where A.id=W.athlete_id and W.olympic_year<2000 order by rand() limit 3;"
+}
+{ 
+    "_id" : ObjectId("58508e3b5b8cce1304a38fd9"), 
+    "question" : "Which of the following athlete won a gold medal on 2008 olympics?", 
+    "questionquery" : "select concat(A.first_name, ' ', A.last_name) as answer from Athlete A, winners W where A.id=W.athlete_id and W.olympic_year=2004 and W.medal='Gold' ORDER by rand() limit 1;", 
+    "options" : "select distinct concat(A.first_name, ' ', A.last_name) as options from Athlete A, winners W where A.id=W.athlete_id and W.olympic_year<2000 order by rand() limit 3;"
+}
+{ 
+    "_id" : ObjectId("585096705b8cce1304a38fdb"), 
+    "question" : "Which of the following athlete won a gold medal on 2008 olympics?", 
+    "questionquery" : "select concat(A.first_name, ' ', A.last_name) as answer from Athlete A, winners W where A.id=W.athlete_id and W.olympic_year=2004 and W.medal='Gold' ORDER by rand() limit 1;", 
+    "options" : "select distinct concat(A.first_name, ' ', A.last_name) as options from Athlete A, winners W where A.id=W.athlete_id and W.olympic_year<2000 order by rand() limit 3;"
+}
+{ 
+    "_id" : ObjectId("585096785b8cce1304a38fdd"), 
+    "question" : "Which of the following athlete won a gold medal on 2008 olympics?", 
+    "questionquery" : "select concat(A.first_name, ' ', A.last_name) as answer from Athlete A, winners W where A.id=W.athlete_id and W.olympic_year=2004 and W.medal='Gold' ORDER by rand() limit 1;", 
+    "options" : "select distinct concat(A.first_name, ' ', A.last_name) as options from Athlete A, winners W where A.id=W.athlete_id and W.olympic_year<2000 order by rand() limit 3;"
+}
+{ 
+    "_id" : ObjectId("585096c55b8cce1304a38fdf"), 
+    "question" : "Florence Griffith-joyner holds the Olympic record in which of the following events?", 
+    "questionquery" : "SELECT S.event AS answer from Sport S where S.sport_id=382", 
+    "options" : "SELECT DISTINCT S.event AS options from Sport S where S.sport_id<>382 and S.event NOT LIKE (SELECT S.event AS answer from Sport S where S.sport_id=382) ORDER BY RAND() LIMIT 3"
+}

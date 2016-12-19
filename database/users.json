@@ -1,0 +1,582 @@
+{ 
+    "_id" : ObjectId("58449a9294dd670dbc3ed5e4"), 
+    "user_id" : "Angela", 
+    "score" : NumberInt(10), 
+    "mode" : "Hard"
+}
+{ 
+    "_id" : ObjectId("58449af694dd670dbc3ed5e6"), 
+    "user_id" : "Brad", 
+    "score" : NumberInt(45), 
+    "mode" : "Hard"
+}
+{ 
+    "_id" : ObjectId("58449b0694dd670dbc3ed5e8"), 
+    "user_id" : "Chad", 
+    "score" : NumberInt(32), 
+    "mode" : "Hard"
+}
+{ 
+    "_id" : ObjectId("58449b1894dd670dbc3ed5ea"), 
+    "user_id" : "Doug", 
+    "score" : NumberInt(56), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("58449b2794dd670dbc3ed5ec"), 
+    "user_id" : "CeeVee", 
+    "score" : NumberInt(67), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("58449b3f94dd670dbc3ed5ee"), 
+    "user_id" : "Anand", 
+    "score" : NumberInt(101), 
+    "mode" : "Hard"
+}
+{ 
+    "_id" : ObjectId("5848a5c39843c9bb8bdf7508"), 
+    "user_id" : "Animesh", 
+    "score" : NumberInt(50), 
+    "mode" : "medium"
+}
+{ 
+    "_id" : ObjectId("5848a78e946796bb93196486"), 
+    "user_id" : "Animesh2", 
+    "score" : NumberInt(25), 
+    "mode" : "medium"
+}
+{ 
+    "_id" : ObjectId("5848a83684caebbb996fe83d"), 
+    "user_id" : "Sagar", 
+    "score" : NumberInt(20), 
+    "mode" : "Rapid Fire"
+}
+{ 
+    "_id" : ObjectId("5848a87a84caebbb996fe83e"), 
+    "user_id" : "Karthik", 
+    "score" : NumberInt(100), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("5848a913c2ce44bb9f46ec6e"), 
+    "user_id" : "Animesh", 
+    "score" : NumberInt(30), 
+    "mode" : "Hard"
+}
+{ 
+    "_id" : ObjectId("5848a946c2ce44bb9f46ec6f"), 
+    "user_id" : "Roger", 
+    "score" : NumberInt(50), 
+    "mode" : "Medium"
+}
+{ 
+    "_id" : ObjectId("5848a9b52eaa99bba2c4fe8e"), 
+    "user_id" : "Sahana", 
+    "score" : NumberInt(5), 
+    "mode" : "Medium"
+}
+{ 
+    "_id" : ObjectId("5848aa2d2eaa99bba2c4fe8f"), 
+    "user_id" : "Saha", 
+    "score" : NumberInt(5), 
+    "mode" : "Medium"
+}
+{ 
+    "_id" : ObjectId("5848ae17e2307062b86dbbaf"), 
+    "user_id" : "Farhan", 
+    "score" : NumberInt(45), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("5848b7e24e4d47bbffbd6de2"), 
+    "user_id" : "ASHIK", 
+    "score" : NumberInt(40), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("5848b8894e4d47bbffbd6de3"), 
+    "user_id" : "Srinidhi", 
+    "score" : NumberInt(20), 
+    "mode" : "Rapid Fire"
+}
+{ 
+    "_id" : ObjectId("5849ea197f2a4bcb2d2eacd2"), 
+    "user_id" : "Ying", 
+    "score" : NumberInt(20), 
+    "mode" : "Rapid Fire"
+}
+{ 
+    "_id" : ObjectId("5849eac77f2a4bcb2d2eacd3"), 
+    "user_id" : "Nadal", 
+    "score" : NumberInt(30), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("5849ef7c744240cb7d1d4077"), 
+    "user_id" : "Donny", 
+    "score" : NumberInt(55), 
+    "mode" : "Rapid Fire"
+}
+{ 
+    "_id" : ObjectId("5849efe8744240cb7d1d4078"), 
+    "user_id" : "Savage", 
+    "score" : NumberInt(55), 
+    "mode" : "Hard"
+}
+{ 
+    "_id" : ObjectId("584c57185bf873d68172adf3"), 
+    "user_id" : "Rekt", 
+    "score" : NumberInt(40), 
+    "mode" : "Hard"
+}
+{ 
+    "_id" : ObjectId("584c589a5bf873d68172adf4"), 
+    "user_id" : "hari", 
+    "score" : NumberInt(40), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("584c59125bf873d68172adf5"), 
+    "user_id" : "Sia", 
+    "score" : NumberInt(40), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("584c86904c26efd6ad5eb70a"), 
+    "user_id" : "Adele", 
+    "score" : NumberInt(115), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("584c87084c26efd6ad5eb70b"), 
+    "user_id" : "Aman", 
+    "score" : NumberInt(30), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("584c8bfb4c26efd6ad5eb70c"), 
+    "user_id" : "Dil", 
+    "score" : NumberInt(70), 
+    "mode" : "Rapid Fire"
+}
+{ 
+    "_id" : ObjectId("584ca1aca8cc48d84c68c2e9"), 
+    "user_id" : "yingjie", 
+    "score" : NumberInt(20), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("584ca224a8cc48d84c68c2ea"), 
+    "user_id" : "Surf", 
+    "score" : NumberInt(20), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("584cb644a8cc48d84c68c2eb"), 
+    "user_id" : "jie", 
+    "score" : NumberInt(25), 
+    "mode" : "Hard"
+}
+{ 
+    "_id" : ObjectId("584ccbd8a8cc48d84c68c2ec"), 
+    "user_id" : "Xang", 
+    "score" : NumberInt(70), 
+    "mode" : "Rapid Fire"
+}
+{ 
+    "_id" : ObjectId("584ccd59a8cc48d84c68c2ed"), 
+    "user_id" : "Varun Gupta", 
+    "score" : NumberInt(15), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("584ccdc4a8cc48d84c68c2ee"), 
+    "user_id" : "Varun ", 
+    "score" : NumberInt(10), 
+    "mode" : "Rapid Fire"
+}
+{ 
+    "_id" : ObjectId("584ccdd1a8cc48d84c68c2ef"), 
+    "user_id" : "Gupta", 
+    "score" : NumberInt(15), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("584cce3ca8cc48d84c68c2f0"), 
+    "user_id" : "Guptill", 
+    "score" : NumberInt(10), 
+    "mode" : "Rapid Fire"
+}
+{ 
+    "_id" : ObjectId("584cec50ad8c41da6de33430"), 
+    "user_id" : "mesh", 
+    "score" : NumberInt(80), 
+    "mode" : "Rapid Fire"
+}
+{ 
+    "_id" : ObjectId("584cecf6ad8c41da6de33431"), 
+    "user_id" : "anil", 
+    "score" : NumberInt(60), 
+    "mode" : "Rapid Fire"
+}
+{ 
+    "_id" : ObjectId("584cee1fad8c41da6de33432"), 
+    "user_id" : "anirudh", 
+    "score" : NumberInt(90), 
+    "mode" : "Rapid Fire"
+}
+{ 
+    "_id" : ObjectId("584cee90ad8c41da6de33433"), 
+    "user_id" : "Damnnn Daniel", 
+    "score" : NumberInt(100), 
+    "mode" : "Rapid Fire"
+}
+{ 
+    "_id" : ObjectId("584cef69ad8c41da6de33434"), 
+    "user_id" : "Yoda", 
+    "score" : NumberInt(100), 
+    "mode" : "Rapid Fire"
+}
+{ 
+    "_id" : ObjectId("584cefe1ad8c41da6de33435"), 
+    "user_id" : "Darth Vader", 
+    "score" : NumberInt(65), 
+    "mode" : "Rapid Fire"
+}
+{ 
+    "_id" : ObjectId("584cf0a116f881da91d1515e"), 
+    "user_id" : "Leia", 
+    "score" : NumberInt(40), 
+    "mode" : "Rapid Fire"
+}
+{ 
+    "_id" : ObjectId("584cf206478a0cda9c8dcabf"), 
+    "user_id" : "Indianna Jones", 
+    "score" : NumberInt(190), 
+    "mode" : "Rapid Fire"
+}
+{ 
+    "_id" : ObjectId("584cf2e5d488acdaa9aefe23"), 
+    "user_id" : "Optimus Prime", 
+    "score" : NumberInt(40), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("584cf3f1d488acdaa9aefe24"), 
+    "user_id" : "Amazon Prime", 
+    "score" : NumberInt(50), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("584cf448d488acdaa9aefe25"), 
+    "user_id" : "Kanye", 
+    "score" : NumberInt(70), 
+    "mode" : "Hard"
+}
+{ 
+    "_id" : ObjectId("584cf9f8a15ed1daef436571"), 
+    "user_id" : "Anna", 
+    "score" : NumberInt(65), 
+    "mode" : "Rapid Fire"
+}
+{ 
+    "_id" : ObjectId("584f3872400ecb2c469cd65f"), 
+    "user_id" : "xqxq", 
+    "score" : NumberInt(20), 
+    "mode" : "Rapid Fire"
+}
+{ 
+    "_id" : ObjectId("584f3962400ecb2c469cd661"), 
+    "user_id" : "xqxq", 
+    "score" : NumberInt(20), 
+    "mode" : "Rapid Fire"
+}
+{ 
+    "_id" : ObjectId("584f50ae2b8890e3dd012fcb"), 
+    "user_id" : "Thejas", 
+    "score" : NumberInt(25), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("584f51262b8890e3dd012fcc"), 
+    "user_id" : "Thejas", 
+    "score" : NumberInt(120), 
+    "mode" : "Rapid Fire"
+}
+{ 
+    "_id" : ObjectId("584f51e72b8890e3dd012fcd"), 
+    "user_id" : "thejas", 
+    "score" : NumberInt(3), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("5850339b92f37002fad9da31"), 
+    "user_id" : "skullcandy", 
+    "score" : NumberInt(30), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("585035bd92f37002fad9da32"), 
+    "user_id" : "skull", 
+    "score" : NumberInt(30), 
+    "mode" : "Hard"
+}
+{ 
+    "_id" : ObjectId("58503616b32958032869e9e6"), 
+    "user_id" : "candy", 
+    "score" : NumberInt(10), 
+    "mode" : "Medium"
+}
+{ 
+    "_id" : ObjectId("5850510bdce51903f0b51a8e"), 
+    "user_id" : "animesh", 
+    "score" : NumberInt(120), 
+    "mode" : "Rapid Fire"
+}
+{ 
+    "_id" : ObjectId("585073288a8d3e04d057189b"), 
+    "user_id" : "animesh", 
+    "score" : NumberInt(95), 
+    "mode" : "Rapid Fire"
+}
+{ 
+    "_id" : ObjectId("585080778a8d3e04d057189c"), 
+    "user_id" : "Outlier", 
+    "score" : NumberInt(40), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("58508362f082880617f0fa03"), 
+    "user_id" : "animesh", 
+    "score" : NumberInt(5), 
+    "mode" : "Medium"
+}
+{ 
+    "_id" : ObjectId("58509baa7849390681bdaf0e"), 
+    "user_id" : "animesh", 
+    "score" : NumberInt(30), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("58509e0a7f2fa606b29125d3"), 
+    "user_id" : "animesh", 
+    "score" : NumberInt(5), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("58509e98e16cb006b781a3e1"), 
+    "user_id" : "animesh", 
+    "score" : NumberInt(15), 
+    "mode" : "Hard"
+}
+{ 
+    "_id" : ObjectId("58509f10e16cb006b781a3e2"), 
+    "user_id" : "animesh", 
+    "score" : NumberInt(15), 
+    "mode" : "Hard"
+}
+{ 
+    "_id" : ObjectId("58509f75e16cb006b781a3e3"), 
+    "user_id" : "animesh", 
+    "score" : NumberInt(35), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("58509fede16cb006b781a3e4"), 
+    "user_id" : "animesh", 
+    "score" : NumberInt(35), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("5850a065e16cb006b781a3e5"), 
+    "user_id" : "animesh", 
+    "score" : NumberInt(35), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("5850a19ec6e01b715f6ce1b1"), 
+    "user_id" : "phelps", 
+    "score" : NumberInt(25), 
+    "mode" : "Medium"
+}
+{ 
+    "_id" : ObjectId("5850a19ce16cb006b781a3e6"), 
+    "user_id" : "animesh", 
+    "score" : NumberInt(10), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("5850a1dae16cb006b781a3e7"), 
+    "user_id" : "animesh", 
+    "score" : NumberInt(10), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("5850a2c65b7e6606e8f18ff3"), 
+    "user_id" : "animesh", 
+    "score" : NumberInt(110), 
+    "mode" : "Rapid Fire"
+}
+{ 
+    "_id" : ObjectId("5850a36dd24a7806eb9e3908"), 
+    "user_id" : "ani", 
+    "score" : NumberInt(40), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("5850a3e5d24a7806eb9e3909"), 
+    "user_id" : "ani", 
+    "score" : NumberInt(40), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("5850a445d24a7806eb9e390a"), 
+    "user_id" : "animesh", 
+    "score" : NumberInt(30), 
+    "mode" : "Medium"
+}
+{ 
+    "_id" : ObjectId("5850a492d24a7806eb9e390b"), 
+    "user_id" : "animesh", 
+    "score" : NumberInt(30), 
+    "mode" : "Medium"
+}
+{ 
+    "_id" : ObjectId("5850a4d4d24a7806eb9e390c"), 
+    "user_id" : "ani", 
+    "score" : NumberInt(20), 
+    "mode" : "Hard"
+}
+{ 
+    "_id" : ObjectId("5850a52ed24a7806eb9e390d"), 
+    "user_id" : "animesh", 
+    "score" : NumberInt(10), 
+    "mode" : "Hard"
+}
+{ 
+    "_id" : ObjectId("5850a56ad24a7806eb9e390e"), 
+    "user_id" : "ani", 
+    "score" : NumberInt(30), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("5850a73626017e738a2d5036"), 
+    "user_id" : "animesh", 
+    "score" : NumberInt(10), 
+    "mode" : "Hard"
+}
+{ 
+    "_id" : ObjectId("5850a7ae26017e738a2d5037"), 
+    "user_id" : "animesh", 
+    "score" : NumberInt(10), 
+    "mode" : "Hard"
+}
+{ 
+    "_id" : ObjectId("5850ad4e91b65a743f3cece6"), 
+    "user_id" : "Ani", 
+    "score" : NumberInt(20), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("5850adcad124a9746ff6aa7e"), 
+    "user_id" : "Animesh", 
+    "score" : NumberInt(10), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("5850c80ed124a9746ff6aa7f"), 
+    "user_id" : "hello", 
+    "score" : NumberInt(30), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("5850c886d124a9746ff6aa80"), 
+    "user_id" : "hello", 
+    "score" : NumberInt(30), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("5850c8fed124a9746ff6aa81"), 
+    "user_id" : "hello", 
+    "score" : NumberInt(30), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("5850c976d124a9746ff6aa82"), 
+    "user_id" : "hello", 
+    "score" : NumberInt(30), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("5850cad8d124a9746ff6aa83"), 
+    "user_id" : "facebook", 
+    "score" : NumberInt(50), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("5850d43bd124a9746ff6aa84"), 
+    "user_id" : "Luan英傑", 
+    "score" : NumberInt(50), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("585157b678e6be970afed55e"), 
+    "user_id" : "测试", 
+    "score" : NumberInt(35), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("5851581978e6be970afed55f"), 
+    "user_id" : "测试", 
+    "score" : NumberInt(45), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("5851589678e6be970afed560"), 
+    "user_id" : "Test Again", 
+    "score" : NumberInt(35), 
+    "mode" : "Rapid Fire"
+}
+{ 
+    "_id" : ObjectId("58515e0cda5ec69810b9a9c5"), 
+    "user_id" : "User Name", 
+    "score" : NumberInt(10), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("58515e97da5ec69810b9a9c6"), 
+    "user_id" : "Rapid Fire", 
+    "score" : NumberInt(30), 
+    "mode" : "Rapid Fire"
+}
+{ 
+    "_id" : ObjectId("58515f0fda5ec69810b9a9c7"), 
+    "user_id" : "Rapid Fire", 
+    "score" : NumberInt(30), 
+    "mode" : "Rapid Fire"
+}
+{ 
+    "_id" : ObjectId("58515f87da5ec69810b9a9c8"), 
+    "user_id" : "Rapid Fire", 
+    "score" : NumberInt(30), 
+    "mode" : "Rapid Fire"
+}
+{ 
+    "_id" : ObjectId("585172e7fbbf859dd3718da1"), 
+    "user_id" : "Easy Mode 1", 
+    "score" : NumberInt(20), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("5851735ffbbf859dd3718da2"), 
+    "user_id" : "Easy Mode 1", 
+    "score" : NumberInt(20), 
+    "mode" : "Easy"
+}
+{ 
+    "_id" : ObjectId("58534f40a2812104b9c50eb9"), 
+    "user_id" : "hukyo", 
+    "score" : NumberInt(30), 
+    "mode" : "Easy"
+}
